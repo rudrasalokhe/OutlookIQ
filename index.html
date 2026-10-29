@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutlookIQ — Earnings Intelligence</title>
+  <meta name="description" content="What they forecast. What they delivered. Institutional platform tracking corporate financial guidance against actual reported performance." />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Custom Configuration: CRM Style -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            appBg: '#d7d8dc',
+            cardBase: '#fdfaf1',
+            sidebarBg: '#f7f4ea',
+            darkAccent: '#232323',
+            brandYellow: '#fbc531',
+            brandYellowLight: '#ffeb99',
+            textMain: '#1e1e1e',
+            textMuted: '#9a9a9a',
+            borderSubtle: '#ede9dd'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Consolas', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <!-- Application Stylesheets for CRM Design -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+</head>
+<body class="h-screen w-screen overflow-hidden bg-cardBase text-sm font-sans antialiased m-0 p-0">
+
+  <!-- Backdrop for Mobile Sidebar -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- Main App Container (Full Screen) -->
+  <div class="w-full h-full flex overflow-hidden bg-cardBase">
+
+    <!-- Sidebar -->
+    <aside class="w-[280px] bg-sidebarBg flex flex-col border-r border-borderSubtle shrink-0 z-40" id="app-sidebar">
+      <!-- Logo -->
+      <div class="p-6 flex items-center gap-3">
+        <div class="w-8 h-8 bg-darkAccent text-white rounded-full flex items-center justify-center font-bold text-lg">
+          <i class="fas fa-chart-pie text-sm"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-semibold text-textMain tracking-tight leading-tight">OutlookIQ</h1>
+          <p class="text-[9px] text-brandYellow uppercase tracking-widest font-semibold">Earnings Intelligence</p>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-6 pb-6 flex flex-col gap-6">
+        <!-- Search -->
+        <div class="bg-[#eeeada] rounded-2xl px-4 py-2.5 flex items-center text-sm inner-shadow relative">
+          <i class="fas fa-search text-textMuted mr-3"></i>
+          <input
+            type="text"
+            id="global-search-input"
+            placeholder="Search here"
+            class="bg-transparent border-none outline-none w-full text-textMain placeholder-textMuted"
+            autocomplete="off"
+          />
+          <div class="global-search-dropdown" id="global-search-dropdown">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- 2x2 Grid Navigation -->
+        <div class="grid grid-cols-2 gap-3">
+          <a href="#overview" class="nav-item nav-grid-item bg-darkAccent text-white rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer shadow-md shadow-darkAccent/20 no-underline" id="nav-overview">
+            <i class="fas fa-th-large text-xl"></i>
+            <span class="nav-text text-xs font-medium">Overview</span>
+          </a>
+          <a href="#companies" class="nav-item nav-grid-item bg-transparent border border-borderSubtle text-textMuted hover:bg-white rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors no-underline" id="nav-companies">
+            <i class="far fa-building text-xl"></i>
+            <span class="nav-text text-xs font-medium">Companies</span>
+          </a>
+          <a href="#promises" class="nav-item nav-grid-item bg-transparent border border-borderSubtle text-textMuted hover:bg-white rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors no-underline" id="nav-promises">
+            <i class="far fa-check-square text-xl"></i>
+            <span class="nav-text text-xs font-medium">Tracker</span>
+          </a>
+          <a href="#analytics" class="nav-item nav-grid-item bg-transparent border border-borderSubtle text-textMuted hover:bg-white rounded-2xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors no-underline" id="nav-analytics">
+            <i class="fas fa-chart-line text-xl"></i>
+            <span class="nav-text text-xs font-medium">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Core Filters -->
+        <div>
+          <h3 class="flex items-center gap-2 text-sm text-textMuted mb-3 cursor-pointer"><i class="fas fa-chevron-down text-[10px]"></i> Core Filters</h3>
+          <ul class="space-y-2 pl-4 border-l-2 border-brandYellow/30 ml-1.5">
+            <li><a href="#comparison" class="nav-item flex items-center gap-2 text-sm text-textMain font-medium cursor-pointer no-underline" id="nav-comparison"><div class="w-1.5 h-1.5 bg-brandYellow rounded-sm"></div> <span class="nav-text">Compare Firms</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Research Tools -->
+        <div>
+          <h3 class="flex items-center gap-2 text-sm text-textMuted mb-3 cursor-pointer"><i class="fas fa-chevron-down text-[10px]"></i> Research Tools</h3>
+          <ul class="space-y-1">
+            <li>
+              <a href="#documents" class="nav-item flex items-center gap-3 text-sm text-textMain p-2.5 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-borderSubtle transition-all no-underline" id="nav-documents">
+                <i class="far fa-file-alt text-textMuted w-4"></i> <span class="nav-text">Documents</span>
+              </a>
+            </li>
+            <li>
+              <a href="#analyst" class="nav-item flex items-center gap-3 text-sm text-textMain p-2.5 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-borderSubtle transition-all no-underline" id="nav-analyst">
+                <i class="far fa-comment-dots text-textMuted w-4"></i> <span class="nav-text">AI Analyst</span>
+              </a>
+            </li>
+            <li>
+              <a href="#methodology" class="nav-item flex items-center gap-3 text-sm text-textMain p-2.5 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-borderSubtle transition-all no-underline" id="nav-methodology">
+                <i class="fas fa-info-circle text-textMuted w-4"></i> <span class="nav-text">Methodology</span>
+              </a>
+            </li>
+            <li>
+              <a href="#settings" class="nav-item flex items-center gap-3 text-sm text-textMain p-2.5 hover:bg-white rounded-xl cursor-pointer border border-transparent hover:border-borderSubtle transition-all no-underline" id="nav-settings">
+                <i class="fas fa-cog text-textMuted w-4"></i> <span class="nav-text">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Profile -->
+      <div class="p-6 mt-auto">
+        <div class="bg-darkAccent text-white p-3 rounded-2xl flex items-center justify-between cursor-pointer relative" id="btn-user-avatar">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-xs font-bold overflow-hidden">
+              <img src="https://ui-avatars.com/api/?name=Research+Desk&background=475569&color=fff" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p class="text-sm font-semibold leading-tight">Research Desk</p>
+              <p class="text-[10px] text-gray-400">Institutional Tier</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down text-xs text-gray-400"></i>
+          <div class="dropdown-menu user-dropdown-menu" id="user-menu-dropdown">
+            <div class="user-menu-header">
+              <strong class="text-textMain text-xs">Research Analyst</strong>
+              <span class="text-[11px] text-textMuted">analyst@outlookiq.internal</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="#settings" class="dropdown-item">Settings & Preferences</a>
+            <a href="#methodology" class="dropdown-item">Auditing Standards</a>
+            <div class="dropdown-divider"></div>
+            <a href="#settings" class="dropdown-item text-red-500">Reset Local Cache</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden p-8 gap-4" role="main">
+      
+      <!-- Top Header Row -->
+      <header class="flex justify-between items-start shrink-0">
+        <div>
+          <p id="topbar-breadcrumb" class="text-xs text-textMuted font-medium mb-1">Core Intelligence / Overview</p>
+          <h2 id="topbar-title" class="text-3xl font-medium text-textMain mb-1 tracking-tight">Earnings Intelligence</h2>
+        </div>
+        <div class="flex gap-3 items-center">
+          <!-- Mobile Hamburger -->
+          <button class="md:hidden w-10 h-10 rounded-full border border-borderSubtle bg-white flex items-center justify-center text-textMain soft-shadow" id="btn-mobile-hamburger" aria-label="Open Navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <!-- Notifications -->
+          <div class="relative">
+            <button id="btn-notifications" class="w-10 h-10 rounded-full border border-borderSubtle bg-white flex items-center justify-center text-textMain hover:bg-gray-50 soft-shadow transition-colors" aria-label="Notifications">
+              <i class="far fa-bell"></i>
+              <span id="notif-badge-count" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-brandYellow text-darkAccent text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white"></span>
+            </button>
+            <div class="dropdown-menu notif-menu" id="notifications-dropdown">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+          <button class="w-10 h-10 rounded-full border border-borderSubtle bg-white flex items-center justify-center text-textMain hover:bg-gray-50 soft-shadow transition-colors"><i class="fas fa-share-square text-xs"></i></button>
+        </div>
+      </header>
+
+      <!-- Page Content Scrollable -->
+      <div id="main-content" class="flex-1 overflow-y-auto pr-1">
+        <!-- Rendered by SPA Router -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrapping Script -->
+  <script type="module" src="js/app.js?v=2"></script>
+</body>
+</html>

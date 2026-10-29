@@ -1,0 +1,16 @@
+# Environment Variables
+.env
+.env.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# Storage & DB
+backend/storage/*.db
+backend/storage/chroma/
+backend/storage/uploads/

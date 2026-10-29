@@ -1,0 +1,335 @@
+/**
+ * OutlookIQ CRM Style Design System — Core Styles
+ * Clean warm aesthetic (#d7d8dc outer appBg, #fdfaf1 cardBase, #f7f4ea sidebarBg, #232323 darkAccent, #fbc531 brandYellow)
+ */
+
+:root {
+  --app-bg: #d7d8dc;
+  --card-base: #fdfaf1;
+  --sidebar-bg: #f7f4ea;
+  --dark-accent: #232323;
+  --brand-yellow: #fbc531;
+  --brand-yellow-light: #ffeb99;
+  --text-main: #1e1e1e;
+  --text-muted: #9a9a9a;
+  --border-subtle: #ede9dd;
+  --card-white: #ffffff;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--card-base);
+  font-family: var(--font-sans);
+  color: var(--text-main);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Shadows */
+.soft-shadow {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.inner-shadow {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+/* Conic gradient circle progress */
+.circle-progress {
+  background: conic-gradient(#fbc531 0% 72%, #f0ebd9 72% 100%);
+}
+
+/* Yellow gradient card highlight */
+.yellow-gradient-card {
+  background: linear-gradient(135deg, #fff9e6 0%, #fdfaf1 100%);
+}
+
+/* Navigation items */
+.nav-grid-item.active {
+  background-color: var(--dark-accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(35, 35, 35, 0.22) !important;
+  border-color: transparent !important;
+}
+
+.nav-grid-item.active i,
+.nav-grid-item.active span {
+  color: #ffffff !important;
+}
+
+.nav-grid-item:not(.active) {
+  background-color: transparent !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-muted) !important;
+}
+
+.nav-grid-item:not(.active):hover {
+  background-color: #ffffff !important;
+  color: var(--text-main) !important;
+}
+
+.nav-item.active:not(.nav-grid-item) {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  font-weight: 600;
+  color: var(--dark-accent) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Global Search Dropdown */
+.global-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: none;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 150;
+}
+
+.global-search-dropdown.open {
+  display: block;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+}
+
+.search-item:hover {
+  background-color: var(--card-base);
+}
+
+.search-ticker {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+.search-name {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search-sector {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: none;
+  z-index: 150;
+  min-width: 250px;
+  overflow: hidden;
+}
+
+.dropdown-menu.open {
+  display: block;
+}
+
+.notif-menu {
+  width: 340px;
+}
+
+.dropdown-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.dropdown-body {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.notif-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.notif-item:hover {
+  background-color: var(--card-base);
+}
+
+.notif-item.read {
+  opacity: 0.65;
+}
+
+.notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.notif-dot.success { background-color: #10b981; }
+.notif-dot.info { background-color: #3b82f6; }
+.notif-dot.warning { background-color: var(--brand-yellow); }
+
+.notif-text {
+  flex: 1;
+}
+
+.notif-title-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.notif-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.notif-time {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.notif-desc {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.user-menu-header {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 4px 0;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 9px 18px;
+  font-size: 12px;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--card-base);
+}
+
+/* Sidebar Backdrop on Mobile */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 45;
+}
+
+.sidebar-backdrop.open {
+  display: block;
+}
+
+/* Page Loading Skeleton */
+.page-loading-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 14px;
+  color: var(--text-muted);
+  gap: 12px;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--brand-yellow);
+  border-radius: 50%;
+  animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* CRM Design Token mappings for all subpages */
+.bg-cardWhite { background-color: #ffffff !important; }
+.bg-bgLight { background-color: var(--card-base) !important; }
+.bg-sidebarDark { background-color: var(--dark-accent) !important; }
+.text-sidebarDark { color: var(--dark-accent) !important; }
+.intelly-shadow { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04) !important; }
+.text-pastelPink { color: var(--brand-yellow) !important; }
+.bg-pastelPink { background-color: var(--brand-yellow-light) !important; }
+.border-pastelPink { border-color: var(--brand-yellow) !important; }
+

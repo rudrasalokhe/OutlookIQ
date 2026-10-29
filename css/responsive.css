@@ -1,0 +1,209 @@
+/**
+ * OutlookIQ Responsive Breakpoints Stylesheet
+ * Desktop (1440px+), Tablet (768px-1024px), Mobile (390px-430px).
+ */
+
+/* Backdrop Overlay for Mobile Sidebar */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(11, 18, 32, 0.75);
+  backdrop-filter: blur(2px);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+}
+
+.sidebar-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==================== TABLET (1024px and below) ==================== */
+@media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .analyst-layout {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .methodology-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pipeline-grid {
+    flex-wrap: wrap;
+  }
+
+  .pipeline-step {
+    flex: 1 1 45%;
+    margin-bottom: 12px;
+  }
+
+  .pipeline-arrow {
+    display: none;
+  }
+}
+
+/* ==================== TABLET TO MOBILE (768px and below) ==================== */
+@media (max-width: 768px) {
+  /* Collapse Sidebar to Hidden / Slide-out Drawer */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .btn-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .topbar-center {
+    display: none; /* In mobile, search moves to page filter */
+  }
+
+  .page-content {
+    padding: 20px 16px 40px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .filter-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .search-input-wrap {
+    min-width: 100%;
+  }
+
+  .analyst-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .analyst-sidebar {
+    height: 280px;
+  }
+
+  .analyst-main {
+    height: 520px;
+  }
+
+  /* Full Screen Evidence Drawer on Mobile */
+  .evidence-drawer {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .drawer-math-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .methodology-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================== MOBILE (430px and below) ==================== */
+@media (max-width: 430px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .demo-indicator-label {
+    display: none;
+  }
+
+  .demo-indicator {
+    padding: 6px;
+  }
+
+  .companies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-card-actions {
+    flex-direction: column;
+  }
+
+  .company-meta-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-card {
+    width: 98vw;
+    max-height: 92vh;
+  }
+
+  .modal-tabs {
+    padding: 0 12px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 10px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .toast {
+    min-width: 100%;
+  }
+}
