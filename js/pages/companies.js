@@ -67,10 +67,10 @@ export async function renderCompanies(container) {
   `;
 
   function renderGrid() {
-    const searchVal = document.getElementById("company-search-input").value.toLowerCase().trim();
-    const sectorVal = document.getElementById("company-sector-filter").value;
-    const sortVal = document.getElementById("company-sort-select").value;
-    const watchlistOnly = document.getElementById("watchlist-only-checkbox").checked;
+    const searchVal = (document.getElementById("company-search-input")?.value || "").toLowerCase().trim();
+    const sectorVal = document.getElementById("company-sector-filter")?.value || "ALL";
+    const sortVal = document.getElementById("company-sort-select")?.value || "marketcap";
+    const watchlistOnly = Boolean(document.getElementById("watchlist-only-checkbox")?.checked);
     const watchlist = getWatchlist();
 
     let list = [...companies];
@@ -78,15 +78,15 @@ export async function renderCompanies(container) {
     // Filter search
     if (searchVal) {
       list = list.filter(c =>
-        c.name.toLowerCase().includes(searchVal) ||
-        c.ticker.toLowerCase().includes(searchVal) ||
-        c.industry.toLowerCase().includes(searchVal)
+        (c.name || "").toLowerCase().includes(searchVal) ||
+        (c.ticker || "").toLowerCase().includes(searchVal) ||
+        (c.industry || c.sector || "").toLowerCase().includes(searchVal)
       );
     }
 
     // Filter sector
     if (sectorVal !== "ALL") {
-      list = list.filter(c => c.sector.toLowerCase().includes(sectorVal.toLowerCase()));
+      list = list.filter(c => (c.sector || "").toLowerCase().includes(sectorVal.toLowerCase()));
     }
 
     // Filter watchlist

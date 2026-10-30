@@ -1,6 +1,7 @@
 /**
- * OutlookIQ Chart.js Visualizations — CRM Design Theme
- * Warm cream aesthetic featuring Brand Yellow (#fbc531), Dark Accent (#232323), and soft neutrals.
+ * OutlookIQ Chart.js Visualizations — Neo-Brutalist Design System
+ * Bold black borders (2px/3px), sharp edges (borderRadius: 0),
+ * Space Grotesk typography, and high-contrast yellow (#fde047), teal (#5eead4), and black (#171717).
  */
 
 import { evaluatePromise } from "./calculations.js";
@@ -21,17 +22,17 @@ export function destroyAllCharts() {
 
 function getChartTheme() {
   return {
-    textColor: "#9a9a9a",
-    gridColor: "rgba(0, 0, 0, 0.04)",
-    tooltipBg: "#232323",
-    tooltipTitle: "#ffffff",
-    tooltipBody: "#e5e7eb",
-    tooltipBorder: "#333333"
+    textColor: "#171717",
+    gridColor: "rgba(23, 23, 23, 0.12)",
+    tooltipBg: "#171717",
+    tooltipTitle: "#fde047",
+    tooltipBody: "#ffffff",
+    tooltipBorder: "#171717"
   };
 }
 
 /**
- * 1. Guidance vs Actual Performance (Grouped Bar Chart - CRM Style)
+ * 1. Guidance vs Actual Performance (Grouped Bar Chart - Neo-Brutalist)
  */
 export function renderGuidanceVsActualChart(canvasId, promises, metric = "Revenue") {
   destroyChart(canvasId);
@@ -57,21 +58,21 @@ export function renderGuidanceVsActualChart(canvasId, promises, metric = "Revenu
         {
           label: "Midpoint",
           data: guidanceData,
-          backgroundColor: "#fbc531", // Brand Yellow
-          borderColor: "#fbc531",
-          borderWidth: 1,
-          borderRadius: 8,
-          barPercentage: 0.65,
+          backgroundColor: "#fde047", // Neo-Brutalist Yellow
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0,
+          barPercentage: 0.7,
           categoryPercentage: 0.6
         },
         {
           label: "Reported",
           data: actualData,
-          backgroundColor: "#232323", // Dark Accent
-          borderColor: "#232323",
-          borderWidth: 1,
-          borderRadius: 8,
-          barPercentage: 0.65,
+          backgroundColor: "#171717", // Pitch Black
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0,
+          barPercentage: 0.7,
           categoryPercentage: 0.6
         }
       ]
@@ -89,10 +90,10 @@ export function renderGuidanceVsActualChart(canvasId, promises, metric = "Revenu
           position: "top",
           align: "end",
           labels: {
-            color: "#1e1e1e",
-            usePointStyle: true,
-            boxWidth: 8,
-            font: { family: "Inter", size: 11, weight: "600" }
+            color: "#171717",
+            usePointStyle: false,
+            boxWidth: 12,
+            font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" }
           }
         },
         tooltip: {
@@ -100,27 +101,25 @@ export function renderGuidanceVsActualChart(canvasId, promises, metric = "Revenu
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
           borderColor: theme.tooltipBorder,
-          borderWidth: 1,
-          padding: 10,
-          cornerRadius: 12,
+          borderWidth: 2,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" },
           callbacks: {
-            label: (ctx) => {
-              const val = ctx.parsed.y;
-              return ` ${ctx.dataset.label}: ${units === "$M" ? "$" + val.toLocaleString() + "M" : val + " " + units}`;
-            }
+            label: (ctx) => ` ${ctx.dataset.label}: ${units === "$M" ? "$" + ctx.parsed.y + "M" : ctx.parsed.y + " " + units}`
           }
         }
       },
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: theme.textColor, font: { family: "Inter", size: 10 } }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" } }
         },
         y: {
-          grid: { color: theme.gridColor },
+          grid: { color: theme.gridColor, lineWidth: 1 },
           ticks: {
             color: theme.textColor,
-            font: { family: "Inter", size: 10 },
+            font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" },
             callback: (val) => units === "$M" ? `$${val}M` : `${val}${units}`
           }
         }
@@ -133,7 +132,7 @@ export function renderGuidanceVsActualChart(canvasId, promises, metric = "Revenu
 }
 
 /**
- * 2. Guidance Outcome Distribution (Doughnut Chart - CRM Style)
+ * 2. Guidance Outcome Distribution (Doughnut Chart - Neo-Brutalist)
  */
 export function renderOutcomeDistributionChart(canvasId, promises) {
   destroyChart(canvasId);
@@ -163,12 +162,12 @@ export function renderOutcomeDistributionChart(canvasId, promises) {
         {
           data: [exceeded, met, missed, pending],
           backgroundColor: [
-            "#fbc531", // Brand Yellow
-            "#232323", // Dark Accent
-            "#9a9a9a", // Muted Gray
-            "#ede9dd"  // Border cream
+            "#fde047", // Yellow
+            "#5eead4", // Teal
+            "#f9a8d4", // Pink
+            "#e5e5e5"  // Gray
           ],
-          borderColor: "#ffffff",
+          borderColor: "#171717",
           borderWidth: 3,
           hoverOffset: 6
         }
@@ -177,16 +176,16 @@ export function renderOutcomeDistributionChart(canvasId, promises) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: "72%",
+      cutout: "70%",
       plugins: {
         legend: {
           position: "bottom",
           labels: {
-            color: "#1e1e1e",
-            usePointStyle: true,
-            boxWidth: 8,
-            padding: 12,
-            font: { family: "Inter", size: 11, weight: "500" }
+            color: "#171717",
+            usePointStyle: false,
+            boxWidth: 12,
+            padding: 14,
+            font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" }
           }
         },
         tooltip: {
@@ -194,9 +193,11 @@ export function renderOutcomeDistributionChart(canvasId, promises) {
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
           borderColor: theme.tooltipBorder,
-          borderWidth: 1,
+          borderWidth: 2,
           padding: 10,
-          cornerRadius: 12,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" },
           callbacks: {
             label: (ctx) => {
               const total = exceeded + met + missed + pending;
@@ -215,7 +216,7 @@ export function renderOutcomeDistributionChart(canvasId, promises) {
 }
 
 /**
- * 3. Forecast Accuracy Over Time (% Deviation Smooth Line Chart)
+ * 3. Forecast Accuracy Over Time (% Deviation - Neo-Brutalist)
  */
 export function renderAccuracyOverTimeChart(canvasId, promises) {
   destroyChart(canvasId);
@@ -238,7 +239,7 @@ export function renderAccuracyOverTimeChart(canvasId, promises) {
   const labels = evaluated.map(item => item.label);
   const data = evaluated.map(item => item.diffPct);
   const pointColors = evaluated.map(item =>
-    item.outcome === "Exceeded" ? "#fbc531" : item.outcome === "Met" ? "#232323" : "#ef4444"
+    item.outcome === "Exceeded" ? "#fde047" : item.outcome === "Met" ? "#5eead4" : "#f9a8d4"
   );
 
   const theme = getChartTheme();
@@ -251,16 +252,16 @@ export function renderAccuracyOverTimeChart(canvasId, promises) {
         {
           label: "% Deviation",
           data,
-          borderColor: "#fbc531",
-          backgroundColor: "rgba(251, 197, 49, 0.12)",
-          borderWidth: 2.5,
+          borderColor: "#171717",
+          backgroundColor: "rgba(253, 224, 71, 0.3)",
+          borderWidth: 3,
           pointBackgroundColor: pointColors,
-          pointBorderColor: "#ffffff",
+          pointBorderColor: "#171717",
           pointBorderWidth: 2,
-          pointRadius: 5,
-          pointHoverRadius: 7,
+          pointRadius: 6,
+          pointHoverRadius: 8,
           fill: true,
-          tension: 0.4
+          stepped: false
         }
       ]
     },
@@ -276,8 +277,10 @@ export function renderAccuracyOverTimeChart(canvasId, promises) {
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
           borderColor: theme.tooltipBorder,
-          borderWidth: 1,
-          cornerRadius: 10,
+          borderWidth: 2,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" },
           callbacks: {
             label: (ctx) => ` Deviation: ${ctx.parsed.y >= 0 ? "+" : ""}${ctx.parsed.y.toFixed(2)}%`
           }
@@ -286,15 +289,16 @@ export function renderAccuracyOverTimeChart(canvasId, promises) {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: theme.textColor, font: { family: "Inter", size: 10 }, maxRotation: 45 }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" }, maxRotation: 45 }
         },
         y: {
           grid: {
-            color: (ctx) => (ctx.tick.value === 0 ? "rgba(0,0,0,0.15)" : theme.gridColor),
-            lineWidth: (ctx) => (ctx.tick.value === 0 ? 1.5 : 1)
+            color: (ctx) => (ctx.tick.value === 0 ? "#171717" : theme.gridColor),
+            lineWidth: (ctx) => (ctx.tick.value === 0 ? 2 : 1)
           },
           ticks: {
             color: theme.textColor,
+            font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" },
             callback: (val) => `${val >= 0 ? "+" : ""}${val}%`
           }
         }
@@ -315,7 +319,7 @@ export function renderDeviationLineChart(canvasId, quartersData) {
   if (!canvas) return;
 
   const labels = quartersData?.labels || ["Q1", "Q2", "Q3", "Q4", "Q1", "Q2"];
-  const data = quartersData?.values || [2.4, 4.1, 3.2, 5.0, 2.8, 3.1];
+  const data = quartersData?.values || [2.4, 4.1, 2.9, 4.5, 2.7, 2.82];
 
   const theme = getChartTheme();
 
@@ -325,18 +329,17 @@ export function renderDeviationLineChart(canvasId, quartersData) {
       labels,
       datasets: [
         {
-          label: "Mean Absolute Deviation (%)",
+          label: "MAD (%)",
           data,
-          borderColor: "#fbc531",
-          backgroundColor: "rgba(251, 197, 49, 0.12)",
-          borderWidth: 2,
-          pointBackgroundColor: "#fbc531",
-          pointBorderColor: "#ffffff",
+          borderColor: "#171717",
+          backgroundColor: "rgba(253, 224, 71, 0.4)",
+          borderWidth: 3,
+          pointBackgroundColor: "#fde047",
+          pointBorderColor: "#171717",
           pointBorderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          fill: true,
-          tension: 0.4
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: true
         }
       ]
     },
@@ -349,7 +352,11 @@ export function renderDeviationLineChart(canvasId, quartersData) {
           backgroundColor: theme.tooltipBg,
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
-          cornerRadius: 8,
+          borderColor: theme.tooltipBorder,
+          borderWidth: 2,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" },
           callbacks: {
             label: (ctx) => ` MAD: ${ctx.parsed.y.toFixed(2)}%`
           }
@@ -358,7 +365,7 @@ export function renderDeviationLineChart(canvasId, quartersData) {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: theme.textColor, font: { family: "Inter", size: 10 } }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" } }
         },
         y: {
           display: false,
@@ -373,7 +380,7 @@ export function renderDeviationLineChart(canvasId, quartersData) {
 }
 
 /**
- * 5. Historical Outcomes by Fiscal Year (Stacked Bar Chart)
+ * 5. Historical Outcomes by Fiscal Year (Stacked Bar Chart - Neo-Brutalist)
  */
 export function renderHistoricalOutcomesChart(canvasId, promises) {
   destroyChart(canvasId);
@@ -411,20 +418,26 @@ export function renderHistoricalOutcomesChart(canvasId, promises) {
         {
           label: "Exceeded",
           data: exceededByYear,
-          backgroundColor: "#fbc531", // Brand Yellow
-          borderRadius: 6
+          backgroundColor: "#fde047", // Yellow
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0
         },
         {
           label: "Met",
           data: metByYear,
-          backgroundColor: "#232323", // Dark Accent
-          borderRadius: 6
+          backgroundColor: "#5eead4", // Teal
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0
         },
         {
           label: "Missed",
           data: missedByYear,
-          backgroundColor: "#9a9a9a", // Muted Gray
-          borderRadius: 6
+          backgroundColor: "#f9a8d4", // Pink
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0
         }
       ]
     },
@@ -435,26 +448,28 @@ export function renderHistoricalOutcomesChart(canvasId, promises) {
         x: {
           stacked: true,
           grid: { display: false },
-          ticks: { color: theme.textColor, font: { family: "Inter", size: 11 } }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" } }
         },
         y: {
           stacked: true,
           grid: { color: theme.gridColor },
-          ticks: { color: theme.textColor, stepSize: 1 }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" }, stepSize: 1 }
         }
       },
       plugins: {
         legend: {
           position: "top",
-          labels: { color: "#1e1e1e", usePointStyle: true, boxWidth: 8, font: { size: 11, weight: "500" } }
+          labels: { color: "#171717", usePointStyle: false, boxWidth: 12, font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" } }
         },
         tooltip: {
           backgroundColor: theme.tooltipBg,
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
           borderColor: theme.tooltipBorder,
-          borderWidth: 1,
-          cornerRadius: 10
+          borderWidth: 2,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" }
         }
       }
     }
@@ -465,7 +480,7 @@ export function renderHistoricalOutcomesChart(canvasId, promises) {
 }
 
 /**
- * 6. Side-by-side Company Comparison Bar Chart
+ * 6. Side-by-side Company Comparison Bar Chart (Neo-Brutalist)
  */
 export function renderCompanyComparisonChart(canvasId, compA, compB, promisesA, promisesB, metric = "Revenue") {
   destroyChart(canvasId);
@@ -506,14 +521,18 @@ export function renderCompanyComparisonChart(canvasId, compA, compB, promisesA, 
         {
           label: `${compA.ticker} (${compA.name})`,
           data: dataA,
-          backgroundColor: "#fbc531", // Brand Yellow
-          borderRadius: 6
+          backgroundColor: "#fde047", // Yellow
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0
         },
         {
           label: `${compB.ticker} (${compB.name})`,
           data: dataB,
-          backgroundColor: "#232323", // Dark Accent
-          borderRadius: 6
+          backgroundColor: "#5eead4", // Teal
+          borderColor: "#171717",
+          borderWidth: 2,
+          borderRadius: 0
         }
       ]
     },
@@ -523,12 +542,13 @@ export function renderCompanyComparisonChart(canvasId, compA, compB, promisesA, 
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: theme.textColor, font: { family: "Inter", size: 11 } }
+          ticks: { color: theme.textColor, font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" } }
         },
         y: {
           grid: { color: theme.gridColor },
           ticks: {
             color: theme.textColor,
+            font: { family: "'Space Grotesk', sans-serif", size: 10, weight: "700" },
             callback: (v) => unit === "$M" ? `$${v}M` : `${v}${unit}`
           }
         }
@@ -536,15 +556,17 @@ export function renderCompanyComparisonChart(canvasId, compA, compB, promisesA, 
       plugins: {
         legend: {
           position: "top",
-          labels: { color: "#1e1e1e", usePointStyle: true, boxWidth: 8, font: { size: 11, weight: "500" } }
+          labels: { color: "#171717", usePointStyle: false, boxWidth: 12, font: { family: "'Space Grotesk', sans-serif", size: 11, weight: "700" } }
         },
         tooltip: {
           backgroundColor: theme.tooltipBg,
           titleColor: theme.tooltipTitle,
           bodyColor: theme.tooltipBody,
           borderColor: theme.tooltipBorder,
-          borderWidth: 1,
-          cornerRadius: 10,
+          borderWidth: 2,
+          cornerRadius: 0,
+          titleFont: { family: "'Space Grotesk', sans-serif", weight: "700" },
+          bodyFont: { family: "'Space Grotesk', sans-serif", weight: "600" },
           callbacks: {
             label: (ctx) => ` ${ctx.dataset.label}: ${unit === "$M" ? "$" + ctx.parsed.y + "M" : ctx.parsed.y + " " + unit}`
           }

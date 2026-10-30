@@ -11,28 +11,34 @@ import { MOCK_COMPANIES, MOCK_NOTIFICATIONS } from "./mockData.js";
  */
 export function showToast(title, message = "", type = "info", duration = 3500) {
   let container = document.getElementById("toast-container");
-  if (!container) {
+  if (!container && typeof document !== "undefined" && document.body) {
     container = document.createElement("div");
     container.id = "toast-container";
-    container.className = "toast-container fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none";
+    container.className = "toast-container";
     document.body.appendChild(container);
   }
+  if (!container) return;
 
   const toast = document.createElement("div");
-  toast.className = `brutal-card pointer-events-auto bg-yellow brutal-border brutal-shadow flex items-start gap-3`;
-  toast.style.padding = "14px 18px";
-  toast.style.minWidth = "280px";
-  toast.style.maxWidth = "400px";
+  toast.className = `brutal-card bg-yellow brutal-border brutal-shadow`;
+  toast.style.padding = "12px 16px";
+  toast.style.width = "320px";
+  toast.style.maxWidth = "90vw";
+  toast.style.display = "flex";
+  toast.style.alignItems = "flex-start";
+  toast.style.gap = "10px";
+
+  const msgText = (typeof message === "string" && message !== "undefined" && message.trim() !== "") ? message.trim() : "";
 
   toast.innerHTML = `
     <div style="flex: 1;">
-      <div style="font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 2px;">${title}</div>
-      ${message ? `<div style="font-size: 0.8rem; font-weight: 600; color: #171717;">${message}</div>` : ""}
+      <div style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; line-height: 1.2;">${title}</div>
+      ${msgText ? `<div style="font-size: 0.75rem; font-weight: 600; color: #171717; margin-top: 4px; line-height: 1.3;">${msgText}</div>` : ""}
     </div>
-    <button class="toast-close" style="background: none; border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; padding: 0 4px;">&times;</button>
+    <button class="toast-close" style="background: none; border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; padding: 0 4px; line-height: 1;">&times;</button>
   `;
 
-  toast.querySelector(".toast-close").addEventListener("click", () => {
+  toast.querySelector(".toast-close")?.addEventListener("click", () => {
     toast.remove();
   });
 
@@ -74,16 +80,17 @@ export class EvidenceDrawer {
   }
 
   init() {
+    if (typeof document === "undefined") return;
     let drawer = document.getElementById("evidence-drawer");
     let overlay = document.getElementById("evidence-drawer-backdrop");
 
-    if (!drawer) {
+    if (!drawer && document.body) {
       drawer = document.createElement("div");
       drawer.id = "evidence-drawer";
       drawer.className = "evidence-drawer";
       document.body.appendChild(drawer);
     }
-    if (!overlay) {
+    if (!overlay && document.body) {
       overlay = document.createElement("div");
       overlay.id = "evidence-drawer-backdrop";
       overlay.className = "evidence-drawer-backdrop";
@@ -93,18 +100,38 @@ export class EvidenceDrawer {
     this.drawerEl = drawer;
     this.overlayEl = overlay;
 
-    this.overlayEl.addEventListener("click", () => this.close());
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.isOpen()) this.close();
-    });
+    if (overlay && !overlay._hasCloseListener) {
+      overlay._hasCloseListener = true;
+      overlay.addEventListener("click", () => this.close());
+    }
+    if (!this._hasEscListener) {
+      this._hasEscListener = true;
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && this.isOpen()) this.close();
+      });
+    }
+  }
+
+  ensureInit() {
+    if (!this.drawerEl || !this.overlayEl) {
+      this.init();
+    }
   }
 
   isOpen() {
-    return this.drawerEl.classList.contains("open");
+    this.ensureInit();
+    return this.drawerEl ? this.drawerEl.classList.contains("open") : false;
+  }
+
+  close() {
+    this.ensureInit();
+    if (this.drawerEl) this.drawerEl.classList.remove("open");
+    if (this.overlayEl) this.overlayEl.classList.remove("open");
   }
 
   open(promise) {
     if (!promise) return;
+    this.ensureInit();
     const ev = evaluatePromise(promise);
     const rangeStr = `${formatValue(promise.guidanceLower, promise.unit)} – ${formatValue(promise.guidanceUpper, promise.unit)}`;
 
@@ -242,11 +269,6 @@ export class EvidenceDrawer {
 
     this.drawerEl.classList.add("open");
     this.overlayEl.classList.add("open");
-  }
-
-  close() {
-    this.drawerEl.classList.remove("open");
-    this.overlayEl.classList.remove("open");
   }
 }
 

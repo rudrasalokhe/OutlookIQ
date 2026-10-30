@@ -17,6 +17,15 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = f"sqlite:///{(BASE_DIR / 'storage' / 'outlookiq.db').resolve().as_posix()}"
 
+    # MongoDB Configuration
+    MONGO_URI: str = os.getenv("MONGO_URI", "")
+    MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "outlookiq")
+
+    # JWT Authentication
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "outlookiq-institutional-secret-key-2026")
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRATION_HOURS: int = 72
+
     # Storage Paths
     STORAGE_DIR: Path = BASE_DIR / "storage"
     UPLOAD_DIR: Path = BASE_DIR / "storage" / "uploads"

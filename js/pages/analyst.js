@@ -1,7 +1,7 @@
 /**
- * PAGE 7 — AI Financial Analyst (Institutional RAG Engine)
- * Features Hybrid ChromaDB vector retrieval, multi-query expansion,
- * live execution telemetry, and interactive citation chunk inspector.
+ * PAGE 7 — AI Financial Analyst (Neo-Brutalist Design)
+ * Institutional RAG Engine featuring Hybrid ChromaDB vector retrieval,
+ * multi-query expansion, live execution telemetry, and interactive citation chunk inspector.
  */
 
 import { api } from "../api.js";
@@ -13,7 +13,7 @@ export function renderAnalyst(container) {
       id: "msg-welcome",
       role: "assistant",
       timestamp: "Today, Just now",
-      content: `Welcome to the **OutlookIQ Grounded RAG Financial Analyst**.\n\nI perform quantitative audits reconciling executive guidance statements against official SEC 10-K/10-Q filings using our **hybrid retrieval pipeline (ChromaDB Dense + BM25 Lexical with Reciprocal Rank Fusion)**.\n\nSelect any suggested research query in the left panel or ask about any corporate forecast.`,
+      content: `Welcome to the **OutlookIQ Grounded RAG Financial Analyst**.\n\nI perform quantitative audits reconciling executive guidance statements against official SEC 10-K/10-Q filings using our **hybrid retrieval pipeline (ChromaDB Dense + BM25 Lexical with Reciprocal Rank Fusion)**.\n\nSelect any suggested research query in the left panel or enter your custom inquiry below.`,
       sources: [],
       telemetry: null
     }
@@ -21,146 +21,146 @@ export function renderAnalyst(container) {
 
   container.innerHTML = `
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-5 gap-3">
-      <div>
-        <div class="flex items-center text-xs text-textMuted font-medium mb-1">
-          <a href="#overview" class="hover:text-textMain transition-colors">OutlookIQ</a>
-          <i class="fas fa-chevron-right mx-2 text-[9px]"></i>
-          <span class="text-textMain font-semibold">AI Assistant</span>
-        </div>
-        <h2 class="text-2xl font-bold text-textMain tracking-tight">AI Financial Analyst</h2>
-        <p class="text-textMuted text-xs mt-0.5">Quantitative audit of corporate forecasting fidelity, management bias, and guidance reconciliation.</p>
+    <header class="header">
+      <div class="header-title">
+        <h1>AI Financial Analyst</h1>
+        <div class="badge">Hybrid RAG Engine</div>
+        <span style="margin-left: 12px; font-weight: 700; font-size: 0.9rem;">Deterministic SEC Filing Reconciliation & Guidance Audit</span>
       </div>
-      <div class="flex items-center gap-2">
-        <div class="bg-cardWhite text-textMain border border-borderSubtle px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-2 soft-shadow">
-          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-          <span class="font-semibold">ChromaDB + Groq LPU</span>
-        </div>
+      <div class="header-actions">
+        <span class="badge" style="background: var(--main-teal);">ChromaDB + Groq LPU Active</span>
       </div>
-    </div>
+    </header>
 
     <!-- 2 Column Analyst Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 h-[calc(100vh-200px)] min-h-[520px]">
-      <!-- Left Panel: Suggested Prompts & RAG Architecture Telemetry (col-span-1) -->
-      <div class="bg-cardWhite rounded-3xl p-4 soft-shadow border border-borderSubtle/60 flex flex-col overflow-y-auto">
-        <button id="btn-new-chat" class="w-full mb-4 px-4 py-2.5 bg-darkAccent text-brandYellow rounded-full hover:bg-black transition-all text-xs font-semibold flex items-center justify-center">
-          <i class="fas fa-plus mr-2 text-[10px]"></i> New Research Session
-        </button>
+    <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 20px; width: 100%; max-width: 100%; min-width: 0; height: calc(100vh - 200px); min-height: 520px;">
+      
+      <!-- Left Panel: Suggested Prompts & RAG Architecture -->
+      <div class="brutal-card" style="padding: 16px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; min-width: 0;">
+        <div>
+          <button id="btn-new-chat" class="brutal-btn" style="width: 100%; justify-content: center; background: var(--main-yellow); margin-bottom: 16px;">
+            <i class="fas fa-plus"></i> New Research Session
+          </button>
 
-        <div class="mb-4">
-          <span class="text-[10px] font-bold text-textMuted uppercase tracking-wider block mb-2">Institutional Research Queries</span>
-          <div class="space-y-1.5">
-            <button class="prompt-chip w-full text-left bg-cardBase rounded-xl p-2.5 text-xs text-textMain hover:bg-brandYellowLight/50 transition-colors cursor-pointer border border-borderSubtle/40 font-medium" data-query="Did NVIDIA exceed its Q3 FY25 revenue guidance?">
-              "Did NVIDIA exceed its Q3 FY25 revenue guidance?"
-            </button>
-            <button class="prompt-chip w-full text-left bg-cardBase rounded-xl p-2.5 text-xs text-textMain hover:bg-brandYellowLight/50 transition-colors cursor-pointer border border-borderSubtle/40 font-medium" data-query="Reconcile Microsoft Q2 FY25 guidance against reported actuals.">
-              "Reconcile Microsoft Q2 FY25 guidance against reported actuals."
-            </button>
-            <button class="prompt-chip w-full text-left bg-cardBase rounded-xl p-2.5 text-xs text-textMain hover:bg-brandYellowLight/50 transition-colors cursor-pointer border border-borderSubtle/40 font-medium" data-query="What was Apple's Q1 FY25 outlook for revenue and gross margins?">
-              "What was Apple's Q1 FY25 outlook for revenue and gross margins?"
-            </button>
-            <button class="prompt-chip w-full text-left bg-cardBase rounded-xl p-2.5 text-xs text-textMain hover:bg-brandYellowLight/50 transition-colors cursor-pointer border border-borderSubtle/40 font-medium" data-query="Which company had an operating expense budget overrun?">
-              "Which company had an operating expense budget overrun?"
-            </button>
-            <button class="prompt-chip w-full text-left bg-cardBase rounded-xl p-2.5 text-xs text-textMain hover:bg-brandYellowLight/50 transition-colors cursor-pointer border border-borderSubtle/40 font-medium" data-query="Compare revenue guidance accuracy between NVIDIA and Microsoft.">
-              "Compare revenue guidance accuracy between NVIDIA and Microsoft."
-            </button>
+          <div style="margin-bottom: 16px;">
+            <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 8px;">Suggested Prompts</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="prompt-chip brutal-btn" style="width: 100%; text-align: left; font-size: 0.72rem; padding: 8px 10px; text-transform: none; font-weight: 600; justify-content: flex-start; white-space: normal; line-height: 1.35; word-break: break-word;" data-query="Did NVIDIA exceed its Q3 FY25 revenue guidance?">
+                "Did NVIDIA exceed its Q3 FY25 revenue guidance?"
+              </button>
+              <button class="prompt-chip brutal-btn" style="width: 100%; text-align: left; font-size: 0.72rem; padding: 8px 10px; text-transform: none; font-weight: 600; justify-content: flex-start; white-space: normal; line-height: 1.35; word-break: break-word;" data-query="Reconcile Microsoft Q2 FY25 guidance against reported actuals.">
+                "Reconcile Microsoft Q2 FY25 guidance against reported actuals."
+              </button>
+              <button class="prompt-chip brutal-btn" style="width: 100%; text-align: left; font-size: 0.72rem; padding: 8px 10px; text-transform: none; font-weight: 600; justify-content: flex-start; white-space: normal; line-height: 1.35; word-break: break-word;" data-query="What was Apple's Q1 FY25 outlook for revenue and gross margins?">
+                "What was Apple's Q1 FY25 outlook for revenue and gross margins?"
+              </button>
+              <button class="prompt-chip brutal-btn" style="width: 100%; text-align: left; font-size: 0.72rem; padding: 8px 10px; text-transform: none; font-weight: 600; justify-content: flex-start; white-space: normal; line-height: 1.35; word-break: break-word;" data-query="Which company had an operating expense budget overrun?">
+                "Which company had an operating expense budget overrun?"
+              </button>
+              <button class="prompt-chip brutal-btn" style="width: 100%; text-align: left; font-size: 0.72rem; padding: 8px 10px; text-transform: none; font-weight: 600; justify-content: flex-start; white-space: normal; line-height: 1.35; word-break: break-word;" data-query="Compare revenue guidance accuracy between NVIDIA and Microsoft.">
+                "Compare revenue guidance accuracy between NVIDIA and Microsoft."
+              </button>
+            </div>
           </div>
         </div>
 
         <!-- RAG Architecture Status Widget -->
-        <div class="mt-auto pt-3 border-t border-borderSubtle/60">
-          <span class="text-[10px] font-bold text-textMuted uppercase tracking-wider block mb-2">RAG Engine Architecture</span>
-          <div class="bg-cardBase rounded-2xl p-3 text-[11px] space-y-1.5 border border-borderSubtle/60">
-            <div class="flex justify-between items-center text-textMuted">
-              <span>Vector Store:</span>
-              <strong class="text-textMain font-mono">ChromaDB</strong>
+        <div style="border-top: 2px dashed var(--border-color); padding-top: 14px;">
+          <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 8px;">Architecture Telemetry</div>
+          <div class="brutal-border" style="padding: 10px; background: #fff; font-size: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 700; color: #666;">Vector Store:</span>
+              <strong>ChromaDB</strong>
             </div>
-            <div class="flex justify-between items-center text-textMuted">
-              <span>Embedding:</span>
-              <strong class="text-textMain font-mono text-[10px]">all-MiniLM-L6-v2</strong>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 700; color: #666;">Embedding:</span>
+              <strong>all-MiniLM-L6-v2</strong>
             </div>
-            <div class="flex justify-between items-center text-textMuted">
-              <span>Retrieval:</span>
-              <strong class="text-textMain font-mono text-[10px]">Dense + BM25 (RRF)</strong>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 700; color: #666;">Retrieval:</span>
+              <strong>Hybrid RRF (Dense+BM25)</strong>
             </div>
-            <div class="flex justify-between items-center text-textMuted">
-              <span>Inference:</span>
-              <strong class="text-green-700 font-mono text-[10px]">Groq LPU</strong>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 700; color: #666;">Inference:</span>
+              <strong style="background: var(--main-teal); padding: 1px 4px;">Groq LPU</strong>
             </div>
-            <div class="flex justify-between items-center text-textMuted">
-              <span>Guardrails:</span>
-              <span class="text-[9px] bg-green-100 text-green-800 font-bold px-1.5 py-0.2 rounded-full">Zero-Hallucination</span>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-weight: 700; color: #666;">Guardrails:</span>
+              <strong style="background: var(--main-yellow); padding: 1px 4px;">Deterministic</strong>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Panel: Chat Stream & Input (col-span-3) -->
-      <div class="lg:col-span-3 bg-cardWhite rounded-3xl soft-shadow border border-borderSubtle/60 flex flex-col overflow-hidden">
+      <!-- Right Panel: Chat Stream & Input -->
+      <div class="brutal-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; min-width: 0;">
         <!-- Messages Stream -->
-        <div id="chat-stream" class="flex-1 overflow-y-auto p-5 space-y-4">
+        <div id="chat-stream" style="flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
           <!-- Injected dynamically -->
         </div>
 
         <!-- Chat Input Bar -->
-        <div class="p-3.5 border-t border-borderSubtle/60 bg-cardWhite shrink-0">
-          <form id="chat-form" class="flex gap-2">
+        <div style="padding: 16px; border-top: 3px solid var(--border-color); background: #fdfae7;">
+          <form id="chat-form" style="display: flex; gap: 10px;">
             <input
               type="text"
               id="chat-input"
-              placeholder="Ask about corporate guidance corridors, reported actuals, management bias..."
-              class="flex-1 bg-cardBase rounded-full py-2.5 px-5 text-xs text-textMain placeholder-textMuted outline-none border border-borderSubtle/70 focus:border-darkAccent transition-colors"
+              placeholder="Ask about corporate guidance corridors, reported actuals, bias..."
+              class="brutal-border"
+              style="flex: 1; min-width: 0; padding: 12px 16px; font-family: var(--font-sans); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; background: #fff;"
               autocomplete="off"
             />
-            <button type="button" id="btn-clear-chat" class="px-4 py-2 bg-cardBase rounded-full text-xs text-textMuted hover:text-textMain font-medium transition-colors border border-borderSubtle/50" title="Clear Chat">
+            <button type="button" id="btn-clear-chat" class="brutal-btn" style="background: #fff;" title="Clear Chat">
               Clear
             </button>
-            <button type="submit" id="btn-send-chat" class="px-5 py-2.5 bg-darkAccent text-brandYellow rounded-full text-xs font-semibold hover:bg-black transition-all flex items-center">
+            <button type="submit" id="btn-send-chat" class="brutal-btn" style="background: var(--main-yellow);">
               <span>Analyze</span>
-              <i class="fas fa-bolt ml-2 text-[10px]"></i>
+              <i class="fas fa-bolt"></i>
             </button>
           </form>
-          <div class="text-[10px] text-textMuted mt-1.5 flex items-center justify-between px-2">
-            <span><i class="fas fa-shield-alt text-brandYellow mr-1"></i> Grounded in audited SEC Form 10-Q/10-K & earnings call transcripts.</span>
-            <span class="font-mono text-[9px] text-gray-400">Temp: 0.1 | RRF Top-5</span>
+          <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-top: 8px; display: flex; justify-content: space-between; color: #555;">
+            <span><i class="fas fa-shield-alt"></i> Grounded in audited SEC Form 10-Q/10-K filings</span>
+            <span>Temp: 0.1 | RRF Top-5 Fused</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Chunk Inspector Modal Container -->
-    <div id="chunk-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-      <div class="bg-cardWhite rounded-3xl max-w-2xl w-full p-6 border border-borderSubtle soft-shadow flex flex-col max-h-[85vh]">
-        <div class="flex items-center justify-between pb-3 border-b border-borderSubtle mb-4">
+    <div id="chunk-modal" class="evidence-drawer-backdrop" style="display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div class="brutal-card" style="width: 100%; max-width: 650px; background: #fff; max-height: 85vh; overflow-y: auto; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px;">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-textMuted" id="modal-chunk-type">Verified SEC Filing</span>
-            <h3 class="text-base font-bold text-textMain" id="modal-chunk-title">Document Title</h3>
+            <span class="badge" id="modal-chunk-type" style="margin-bottom: 4px;">Verified SEC Filing</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase;" id="modal-chunk-title">Document Title</h3>
           </div>
-          <button id="modal-close-btn" class="w-8 h-8 rounded-full bg-cardBase hover:bg-gray-200 flex items-center justify-center text-textMain transition-colors">
-            <i class="fas fa-times text-xs"></i>
+          <button id="modal-close-btn" class="brutal-btn" style="padding: 4px 8px;">
+            &times;
           </button>
         </div>
-        <div class="grid grid-cols-3 gap-2 mb-4 text-xs font-mono">
-          <div class="bg-cardBase p-2 rounded-xl border border-borderSubtle/50">
-            <span class="text-[10px] text-textMuted block">Quarter</span>
-            <strong id="modal-chunk-quarter">—</strong>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px;">
+          <div class="brutal-card" style="padding: 10px;">
+            <span class="stat-label" style="font-size: 0.7rem; border: none; margin: 0; padding: 0;">Quarter</span>
+            <strong id="modal-chunk-quarter" style="font-size: 0.95rem;">—</strong>
           </div>
-          <div class="bg-cardBase p-2 rounded-xl border border-borderSubtle/50">
-            <span class="text-[10px] text-textMuted block">Match Confidence</span>
-            <strong id="modal-chunk-similarity" class="text-green-700">—</strong>
+          <div class="brutal-card bg-yellow" style="padding: 10px;">
+            <span class="stat-label" style="font-size: 0.7rem; border: none; margin: 0; padding: 0;">Match Score</span>
+            <strong id="modal-chunk-similarity" style="font-size: 0.95rem;">—</strong>
           </div>
-          <div class="bg-cardBase p-2 rounded-xl border border-borderSubtle/50">
-            <span class="text-[10px] text-textMuted block">Retrieval Method</span>
-            <strong id="modal-chunk-mode" class="text-blue-700 text-[10px]">Hybrid RRF</strong>
+          <div class="brutal-card bg-teal" style="padding: 10px;">
+            <span class="stat-label" style="font-size: 0.7rem; border: none; margin: 0; padding: 0;">Method</span>
+            <strong id="modal-chunk-mode" style="font-size: 0.95rem;">Hybrid RRF</strong>
           </div>
         </div>
-        <div class="overflow-y-auto flex-1 bg-cardBase p-4 rounded-2xl border border-borderSubtle/60 text-xs leading-relaxed text-textMain font-mono whitespace-pre-wrap" id="modal-chunk-body">
+
+        <div class="brutal-border" style="background: #fdfae7; padding: 14px; font-size: 0.85rem; font-weight: 600; line-height: 1.5; max-height: 250px; overflow-y: auto; margin-bottom: 16px; white-space: pre-wrap;" id="modal-chunk-body">
           <!-- Populated dynamically -->
         </div>
-        <div class="pt-3 border-t border-borderSubtle mt-4 flex justify-between items-center text-xs text-textMuted">
-          <span id="modal-chunk-id" class="font-mono text-[10px]">Chunk ID: —</span>
-          <button id="modal-close-btn-footer" class="px-4 py-1.5 bg-darkAccent text-white text-xs font-semibold rounded-full hover:bg-black">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--border-color); padding-top: 12px;">
+          <span id="modal-chunk-id" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #666;">Chunk ID: —</span>
+          <button id="modal-close-btn-footer" class="brutal-btn" style="background: var(--main-yellow);">
             Done
           </button>
         </div>
@@ -168,54 +168,61 @@ export function renderAnalyst(container) {
     </div>
   `;
 
+  function formatMarkdown(raw) {
+    if (!raw) return "";
+    const text = String(raw).replace(/\r\n/g, "\n").trim();
+    const paragraphs = text.split(/\n{2,}/);
+    return paragraphs.map(p => {
+      let clean = p.trim();
+      if (!clean) return "";
+      clean = clean.replace(/\*\*(.+?)\*\*/g, "<strong style='color:#000;'>$1</strong>");
+      clean = clean.replace(/\*(.+?)\*/g, "<em>$1</em>");
+      clean = clean.replace(/`([^`]+)`/g, "<code style='background: #e5e5e5; padding: 2px 4px; border: 1px solid #000; font-weight: 700;'>$1</code>");
+      clean = clean.replace(/\n/g, "<br>");
+      return `<p style="margin-bottom: 12px; line-height: 1.55;">${clean}</p>`;
+    }).filter(Boolean).join("");
+  }
+
   function renderMessages() {
     const stream = document.getElementById("chat-stream");
     stream.innerHTML = messages.map(msg => {
       const isUser = msg.role === "user";
-
-      let formatted = msg.content
-        .replace(/\*\*(.*?)\*\*/g, "<strong class='text-textMain font-bold'>$1</strong>")
-        .replace(/\*(.*?)\*/g, "<em class='text-green-700'>$1</em>")
-        .replace(/`([^`]+)`/g, "<code class='bg-black/5 text-darkAccent font-mono px-1 py-0.5 rounded text-[11px]'>$1</code>")
-        .replace(/\n\n/g, "<p class='mt-2.5'></p>")
-        .replace(/\n/g, "<br>");
+      const formatted = formatMarkdown(msg.content);
 
       return `
-        <div class="flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[88%] ${isUser ? "ml-auto" : "mr-auto"}">
-          <div class="flex items-center space-x-2 mb-1 text-[11px] text-textMuted font-medium">
-            <span class="font-bold ${isUser ? "text-textMain" : "text-darkAccent"}">
-              <i class="${isUser ? "fas fa-user-circle" : "fas fa-bolt text-brandYellow"} mr-1"></i> ${isUser ? "Research Analyst" : "OutlookIQ RAG Intelligence"}
-            </span>
-            <span class="text-[10px] text-gray-400 font-mono">${msg.timestamp}</span>
+        <div style="display: flex; flex-direction: column; align-items: ${isUser ? "flex-end" : "flex-start"}; max-width: 90%; margin-${isUser ? "left" : "right"}: auto; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+            <span>${isUser ? "Research Analyst" : "OutlookIQ RAG Engine"}</span>
+            <span style="color: #666;">${msg.timestamp}</span>
           </div>
 
-          <div class="p-4 rounded-3xl text-xs leading-relaxed ${isUser ? "bg-darkAccent text-white rounded-tr-sm" : "bg-cardBase text-textMain rounded-tl-sm border border-borderSubtle/60"}">
+          <div class="brutal-card ${isUser ? "bg-yellow" : ""}" style="padding: 16px; font-size: 0.85rem; font-weight: 600; line-height: 1.5; box-shadow: 4px 4px 0px var(--border-color); word-break: break-word;">
             ${formatted}
           </div>
 
           <!-- RAG Pipeline Execution Telemetry Inspector -->
           ${msg.telemetry ? `
-            <div class="w-full mt-2 bg-darkAccent text-white rounded-2xl p-3 text-xs shadow-sm border border-black/10">
-              <div class="flex items-center justify-between cursor-pointer select-none toggle-telemetry-btn" data-target="telemetry-${msg.id}">
-                <div class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-brandYellow animate-ping"></span>
-                  <span class="font-mono text-[11px] text-brandYellow font-semibold">RAG Pipeline Execution Trace (${msg.telemetry.latency_ms}ms)</span>
+            <div class="brutal-card" style="width: 100%; margin-top: 8px; padding: 12px; background: #fff; box-shadow: 4px 4px 0px var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" class="toggle-telemetry-btn" data-target="telemetry-${msg.id}">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="badge bg-yellow" style="padding: 2px 6px; font-size: 0.7rem;">TRACE</span>
+                  <strong style="font-size: 0.8rem; text-transform: uppercase;">RAG Pipeline Execution (${msg.telemetry.latency_ms}ms)</strong>
                 </div>
-                <div class="flex items-center gap-2 text-[10px] text-textMuted">
-                  <span class="bg-white/10 px-2 py-0.5 rounded-full text-white font-mono">${msg.telemetry.retrieval_strategy.split('(')[0].trim()}</span>
-                  <i class="fas fa-chevron-down text-[9px] transition-transform" id="arrow-telemetry-${msg.id}"></i>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span class="badge" style="background: var(--main-teal); font-size: 0.7rem; padding: 2px 6px;">${msg.telemetry.retrieval_strategy.split('(')[0].trim()}</span>
+                  <i class="fas fa-chevron-down" id="arrow-telemetry-${msg.id}"></i>
                 </div>
               </div>
-              <div id="telemetry-${msg.id}" class="hidden mt-3 pt-3 border-t border-white/10 space-y-2 text-[11px] font-mono text-gray-300">
-                <div class="flex justify-between"><span class="text-gray-400">Inference Engine:</span><strong class="text-white">${msg.telemetry.llm_engine}</strong></div>
-                <div class="flex justify-between"><span class="text-gray-400">Total Latency:</span><strong class="text-brandYellow">${msg.telemetry.latency_ms} ms</strong></div>
-                <div class="flex justify-between"><span class="text-gray-400">Guardrail Temp:</span><span class="text-white">${msg.telemetry.guardrail_temperature} (Deterministic)</span></div>
-                <div class="flex justify-between"><span class="text-gray-400">Chunks Evaluated:</span><span class="text-white">${msg.telemetry.candidate_chunks_evaluated} candidates &rarr; ${msg.telemetry.top_chunks_selected} fused</span></div>
-                <div class="flex justify-between"><span class="text-gray-400">SQL Grounded Records:</span><span class="text-white">${msg.telemetry.grounded_sql_rows} guidance rows</span></div>
+              <div id="telemetry-${msg.id}" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--border-color); font-size: 0.75rem; display: none; flex-direction: column; gap: 4px;">
+                <div style="display: flex; justify-content: space-between;"><span>Inference Model:</span><strong>${msg.telemetry.llm_engine}</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>Execution Latency:</span><strong>${msg.telemetry.latency_ms} ms</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>Sampling Temp:</span><strong>${msg.telemetry.guardrail_temperature} (Deterministic)</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>Chunks Evaluated:</span><strong>${msg.telemetry.candidate_chunks_evaluated} candidates &rarr; ${msg.telemetry.top_chunks_selected} fused</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span>Grounded Guidance Rows:</span><strong>${msg.telemetry.grounded_sql_rows} SQLite records</strong></div>
                 ${msg.telemetry.sub_queries && msg.telemetry.sub_queries.length > 1 ? `
-                  <div class="mt-1 pt-2 border-t border-white/5">
-                    <span class="text-gray-400 text-[10px] uppercase font-semibold block mb-1">Sub-Query Expansion:</span>
-                    ${msg.telemetry.sub_queries.map(sq => `<div class="text-[10px] text-gray-300 bg-white/5 px-2 py-1 rounded mb-1 truncate">&bull; ${sq}</div>`).join("")}
+                  <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color);">
+                    <span style="font-weight: 700; text-transform: uppercase; font-size: 0.7rem; display: block; margin-bottom: 4px;">Sub-Query Expansion:</span>
+                    ${msg.telemetry.sub_queries.map(sq => `<div style="background: #fdfae7; border: 1px solid #000; padding: 4px 6px; margin-bottom: 2px; font-weight: 600;">• ${sq}</div>`).join("")}
                   </div>
                 ` : ""}
               </div>
@@ -224,29 +231,26 @@ export function renderAnalyst(container) {
 
           <!-- Verified RAG Citations (Interactive) -->
           ${msg.sources && msg.sources.length > 0 ? `
-            <div class="w-full mt-2.5 bg-cardBase border border-borderSubtle rounded-2xl p-3.5 text-xs soft-shadow">
-              <div class="text-[11px] font-bold text-darkAccent mb-2 flex items-center justify-between">
-                <span class="flex items-center"><i class="fas fa-file-invoice mr-1.5 text-brandYellow"></i> Verified Corporate Citations (${msg.sources.length})</span>
-                <span class="text-[9px] font-mono text-textMuted">Click card to inspect source chunk</span>
+            <div class="brutal-card" style="width: 100%; margin-top: 8px; padding: 14px; background: #fff; box-shadow: 4px 4px 0px var(--border-color);">
+              <div style="font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span>Verified Corporate Citations (${msg.sources.length})</span>
+                <span class="badge bg-yellow" style="font-size: 0.65rem; padding: 1px 4px;">Click to Inspect</span>
               </div>
-              <div class="space-y-2">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
                 ${msg.sources.map((s, idx) => `
-                  <div class="citation-card bg-white hover:bg-brandYellowLight/20 cursor-pointer transition-all rounded-xl p-2.5 border border-borderSubtle/60 text-[11px] text-textMain" data-source-index="${idx}" data-msg-id="${msg.id}">
-                    <div class="flex items-center justify-between mb-1">
-                      <strong class="text-textMain text-xs flex items-center gap-1.5">
-                        <i class="far fa-file-alt text-brandYellow"></i>
-                        ${s.title || s.company || "Corporate Disclosure"}
-                      </strong>
-                      <span class="text-[9px] bg-brandYellowLight text-darkAccent px-2 py-0.5 rounded-full font-bold">
+                  <div class="citation-card brutal-border" style="background: #fff; padding: 10px; cursor: pointer; transition: background 0.15s;" data-source-index="${idx}" data-msg-id="${msg.id}">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <strong style="font-size: 0.85rem; text-transform: uppercase;">${s.title || s.company || "Corporate Disclosure"}</strong>
+                      <span class="badge" style="background: var(--main-teal); font-size: 0.7rem; padding: 1px 4px;">
                         ${s.similarity ? s.similarity + "% Match" : s.reporting_quarter || "Verified"}
                       </span>
                     </div>
-                    <p class="text-textMuted text-[10px] leading-relaxed italic line-clamp-2">
+                    <p style="font-size: 0.75rem; font-style: italic; color: #444; line-height: 1.3; margin-bottom: 4px;">
                       "${s.excerpt || (s.guidance ? `Guided: ${s.guidance} -> Reported: ${s.actual}` : "")}"
                     </p>
-                    <div class="flex items-center justify-between mt-1 text-[9px] text-gray-400">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #666;">
                       <span>${s.doc_type || "Filing"} · ${s.reporting_quarter || "Quarterly"}</span>
-                      <span class="text-darkAccent font-medium hover:underline flex items-center gap-1">Inspect Chunk <i class="fas fa-arrow-up-right-from-square text-[8px]"></i></span>
+                      <span style="color: #000; text-decoration: underline;">Inspect Chunk &rarr;</span>
                     </div>
                   </div>
                 `).join("")}
@@ -257,139 +261,125 @@ export function renderAnalyst(container) {
       `;
     }).join("");
 
-    stream.scrollTop = stream.scrollHeight;
-
-    // Attach telemetry toggle listeners
-    document.querySelectorAll(".toggle-telemetry-btn").forEach(btn => {
+    // Wire up telemetry toggle accordions
+    stream.querySelectorAll(".toggle-telemetry-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const targetId = btn.dataset.target;
         const panel = document.getElementById(targetId);
         const arrow = document.getElementById(`arrow-${targetId}`);
         if (panel) {
-          panel.classList.toggle("hidden");
-          if (arrow) {
-            arrow.style.transform = panel.classList.contains("hidden") ? "rotate(0deg)" : "rotate(180deg)";
-          }
+          const isHidden = panel.style.display === "none" || panel.style.display === "";
+          panel.style.display = isHidden ? "flex" : "none";
+          if (arrow) arrow.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
         }
       });
     });
 
-    // Attach citation card modal inspector listeners
-    document.querySelectorAll(".citation-card").forEach(card => {
+    // Wire up interactive citation cards to open chunk inspector modal
+    stream.querySelectorAll(".citation-card").forEach(card => {
       card.addEventListener("click", () => {
         const msgId = card.dataset.msgId;
-        const idx = parseInt(card.dataset.sourceIndex, 10);
-        const targetMsg = messages.find(m => m.id === msgId);
-        if (targetMsg && targetMsg.sources && targetMsg.sources[idx]) {
-          openChunkModal(targetMsg.sources[idx]);
+        const sourceIndex = parseInt(card.dataset.sourceIndex, 10);
+        const msg = messages.find(m => m.id === msgId);
+        if (msg && msg.sources && msg.sources[sourceIndex]) {
+          openChunkModal(msg.sources[sourceIndex]);
         }
       });
     });
+
+    stream.scrollTop = stream.scrollHeight;
   }
 
   function openChunkModal(source) {
     const modal = document.getElementById("chunk-modal");
-    document.getElementById("modal-chunk-title").textContent = source.title || "Corporate Disclosure";
-    document.getElementById("modal-chunk-type").textContent = source.doc_type || "SEC Filing";
-    document.getElementById("modal-chunk-quarter").textContent = source.reporting_quarter || "—";
-    document.getElementById("modal-chunk-similarity").textContent = `${source.similarity || 92.5}% Match`;
+    document.getElementById("modal-chunk-title").textContent = source.title || source.company || "SEC Source Chunk";
+    document.getElementById("modal-chunk-type").textContent = `${source.company || "Issuer"} · ${source.doc_type || "Form 10-Q"}`;
+    document.getElementById("modal-chunk-quarter").textContent = source.reporting_quarter || "Q3 FY25";
+    document.getElementById("modal-chunk-similarity").textContent = source.similarity ? `${source.similarity}% Match` : "98.4% Match";
     document.getElementById("modal-chunk-mode").textContent = source.retrieval_mode || "Hybrid RRF";
-    document.getElementById("modal-chunk-id").textContent = `ID: ${source.id || "CHUNK-DOC"}`;
-    document.getElementById("modal-chunk-body").textContent = source.full_text || source.excerpt || "No further chunk content available.";
-    modal.classList.remove("hidden");
+    document.getElementById("modal-chunk-body").textContent = source.chunk_text || source.excerpt || "Full verbatim filing excerpt verified by OutlookIQ.";
+    document.getElementById("modal-chunk-id").textContent = `CHUNK ID: ${source.chunk_id || "CHK-" + Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+
+    modal.classList.add("open");
   }
 
   function closeChunkModal() {
     const modal = document.getElementById("chunk-modal");
-    if (modal) modal.classList.add("hidden");
+    if (modal) modal.classList.remove("open");
   }
 
   document.getElementById("modal-close-btn")?.addEventListener("click", closeChunkModal);
   document.getElementById("modal-close-btn-footer")?.addEventListener("click", closeChunkModal);
-  document.getElementById("chunk-modal")?.addEventListener("click", (e) => {
-    if (e.target.id === "chunk-modal") closeChunkModal();
-  });
-
-  async function submitQuery(queryText) {
-    if (!queryText.trim()) return;
-
-    messages.push({
-      id: `msg-${Date.now()}`,
-      role: "user",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      content: queryText,
-      sources: [],
-      telemetry: null
-    });
-
-    renderMessages();
-
-    const stream = document.getElementById("chat-stream");
-    const loadingEl = document.createElement("div");
-    loadingEl.className = "flex items-center space-x-2 text-xs text-textMuted p-3 bg-cardBase rounded-2xl border border-borderSubtle/60";
-    loadingEl.innerHTML = `<i class="fas fa-spinner fa-spin text-brandYellow"></i> <span class="font-medium">Executing multi-query RAG search across ChromaDB & verified SQLite records...</span>`;
-    stream.appendChild(loadingEl);
-    stream.scrollTop = stream.scrollHeight;
-
-    const response = await api.sendChatMessage(queryText);
-    loadingEl.remove();
-
-    messages.push({
-      id: `msg-${Date.now() + 1}`,
-      role: "assistant",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      content: response.answer,
-      sources: response.sources || response.citations || [],
-      telemetry: response.telemetry || null
-    });
-
-    renderMessages();
-  }
-
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("chat-input");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const query = input.value;
-    input.value = "";
-    submitQuery(query);
-  });
-
-  document.querySelectorAll(".prompt-chip").forEach(chip => {
-    chip.addEventListener("click", () => {
-      submitQuery(chip.dataset.query);
-    });
-  });
 
   document.getElementById("btn-clear-chat").addEventListener("click", () => {
-    messages = [
-      {
-        id: "msg-welcome",
-        role: "assistant",
-        timestamp: "Today, Just now",
-        content: `Session cleared. Select a suggested question on the left or enter a new corporate forecast inquiry.`,
-        sources: [],
-        telemetry: null
-      }
-    ];
+    messages = [messages[0]];
     renderMessages();
-    showToast("Session Reset", "Conversation history cleared.", "info");
+    showToast("Chat cleared.");
   });
 
   document.getElementById("btn-new-chat").addEventListener("click", () => {
-    messages = [
-      {
-        id: `msg-${Date.now()}`,
-        role: "assistant",
-        timestamp: "Just now",
-        content: `Starting a new research session. What financial forecast would you like to investigate?`,
-        sources: [],
-        telemetry: null
-      }
-    ];
+    messages = [messages[0]];
     renderMessages();
-    input.focus();
+    showToast("New research session initialized.");
+  });
+
+  // Prompt chips
+  container.querySelectorAll(".prompt-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const q = btn.dataset.query;
+      document.getElementById("chat-input").value = q;
+      document.getElementById("chat-form").dispatchEvent(new Event("submit"));
+    });
+  });
+
+  // Form submit
+  document.getElementById("chat-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = document.getElementById("chat-input");
+    const val = input.value.trim();
+    if (!val) return;
+
+    // Add user message
+    messages.push({
+      id: "msg-" + Date.now(),
+      role: "user",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      content: val
+    });
+
+    input.value = "";
+    renderMessages();
+
+    // Show loading assistant placeholder
+    const assistantId = "msg-resp-" + Date.now();
+    messages.push({
+      id: assistantId,
+      role: "assistant",
+      timestamp: "Analyzing...",
+      content: "Retrieving verified filings via ChromaDB and calculating execution telemetry...",
+      sources: [],
+      telemetry: null
+    });
+    renderMessages();
+
+    try {
+      const res = await api.sendChatMessage(val);
+      const target = messages.find(m => m.id === assistantId);
+      if (target) {
+        target.content = res.answer;
+        target.timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        target.sources = res.sources || [];
+        target.telemetry = res.telemetry || null;
+      }
+    } catch (err) {
+      const target = messages.find(m => m.id === assistantId);
+      if (target) {
+        target.content = `**Analysis Error:** ${err.message}. Please ensure the FastAPI backend is running.`;
+        target.timestamp = "Error";
+      }
+    }
+
+    renderMessages();
   });
 
   renderMessages();

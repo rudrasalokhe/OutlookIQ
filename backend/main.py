@@ -21,6 +21,7 @@ from backend.routes.comparison import router as comparison_router
 from backend.routes.documents import router as documents_router
 from backend.routes.analyze import router as analyze_router
 from backend.routes.chat import router as chat_router
+from backend.api.auth import router as auth_router
 
 # Ensure tables exist at startup
 Base.metadata.create_all(bind=engine)
@@ -38,7 +39,6 @@ async def lifespan(app: FastAPI):
         print(f"Database online with {db.query(Company).count()} companies.")
     finally:
         db.close()
-
     yield
 
 app = FastAPI(
@@ -66,6 +66,7 @@ app.include_router(comparison_router, prefix=settings.API_PREFIX)
 app.include_router(documents_router, prefix=settings.API_PREFIX)
 app.include_router(analyze_router, prefix=settings.API_PREFIX)
 app.include_router(chat_router, prefix=settings.API_PREFIX)
+app.include_router(auth_router, prefix=settings.API_PREFIX)
 
 # Also expose /health at root for health check probes
 @app.get("/health")

@@ -1,0 +1,61 @@
+{
+  "c273f92a-d21f-4fea-a258-435cf5cf1b56": {
+    "_id": "c273f92a-d21f-4fea-a258-435cf5cf1b56",
+    "email": "analyst@outlookiq.internal",
+    "hashed_password": "$2b$12$SrGQOZ2pwwKpX9M2n4UWJuWAgUOIHoZL2R2dFLdHNlhcq8rS.D61e",
+    "full_name": "Rudra Salokhe",
+    "organization": "Apex Capital Management",
+    "role": "Lead Quantitative Strategist",
+    "tier": "Institutional Tier",
+    "investment_focus": "Big Tech & AI Semiconductors",
+    "guidance_tolerance": "Strict Corridors (\u00b12.5%)",
+    "api_key": "oq_live_56a3c4598dd9450a8bfb7af6",
+    "watchlist": [
+      "NVDA",
+      "MSFT",
+      "AAPL",
+      "GOOGL",
+      "AMZN"
+    ],
+    "created_at": "2026-10-30T10:53:03.086089+00:00",
+    "updated_at": "2026-10-30T10:53:03.086108+00:00"
+  },
+  "8972ecd8-2bbf-4a45-8289-60185947cab3": {
+    "_id": "8972ecd8-2bbf-4a45-8289-60185947cab3",
+    "email": "rudra.test@outlookiq.com",
+    "hashed_password": "$2b$12$11ET7thSxlHi.Tv32Jf4t.KShve1Xfp51hV5tmzy1d8HrcWzDqyHO",
+    "full_name": "Rudra Salokhe",
+    "organization": "Apex Capital Management",
+    "role": "Lead Quantitative Strategist",
+    "tier": "Institutional Tier",
+    "investment_focus": "Large Cap Tech & Semis",
+    "guidance_tolerance": "Strict",
+    "api_key": "oq_live_0168d3a5044c4952a629a947",
+    "watchlist": [
+      "NVDA",
+      "MSFT",
+      "AAPL"
+    ],
+    "created_at": "2026-10-30T10:53:21.343240+00:00",
+    "updated_at": "2026-10-30T10:53:21.343263+00:00"
+  },
+  "d4c51ce8-54ba-4682-9142-687a56bbbb13": {
+    "_id": "d4c51ce8-54ba-4682-9142-687a56bbbb13",
+    "email": "rudrasalokhe100@gmail.com",
+    "hashed_password": "$2b$12$uh9u1vDw9f6IbSwhO9/zjevcY4Kc0GHoPT1YinD0N8.HpjFLbkXkW",
+    "full_name": "Rudra Salokhe",
+    "organization": "JP Morgan",
+    "role": "Quant Trader",
+    "tier": "Institutional Tier",
+    "investment_focus": "Large Cap Tech & Semis",
+    "guidance_tolerance": "Strict",
+    "api_key": "oq_live_37b0f17f05144f648202749b",
+    "watchlist": [
+      "NVDA",
+      "MSFT",
+      "AAPL"
+    ],
+    "created_at": "2026-10-30T10:54:46.212546+00:00",
+    "updated_at": "2026-10-30T10:54:46.212571+00:00"
+  }
+}
