@@ -1,6 +1,6 @@
 /**
- * PAGE 4 — Financial Analytics (Intelly Aesthetic)
- * Quantitative intelligence styled with Intelly warm canvas, white rounded-3xl cards, and pastel badges.
+ * PAGE 4 — Financial Analytics (Neo-Brutalist Design)
+ * Quantitative intelligence styled with bold black borders (3px), hard drop-shadows (6px), Space Grotesk.
  */
 
 import { api } from "../api.js";
@@ -19,34 +19,32 @@ export async function renderAnalytics(container) {
 
   container.innerHTML = `
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
-      <div>
-        <div class="flex items-center text-xs text-textMuted font-medium mb-1">
-          <a href="#dashboard" class="hover:text-textMain transition-colors">OutlookIQ</a>
-          <i class="fas fa-chevron-right mx-2 text-[9px]"></i>
-          <span class="text-textMain font-semibold">Analytics</span>
-        </div>
-        <h2 class="text-2xl font-bold text-textMain">Guidance Analytics</h2>
-        <p class="text-textMuted text-xs mt-1">Quantitative audit of forecasting accuracy, directional bias, and cross-quarter delivery.</p>
+    <header class="header">
+      <div class="header-title">
+        <h1>Guidance Analytics</h1>
+        <div class="badge">Quantitative Audit</div>
+        <span style="margin-left: 12px; font-weight: 700; font-size: 0.9rem;">Forecast Dispersion, Bias & Execution Consistency</span>
       </div>
-      <button id="btn-export-analytics-csv" class="flex items-center px-4 py-2 bg-cardWhite border border-gray-100 rounded-full text-textMain hover:bg-bgLight transition-colors text-xs font-semibold intelly-shadow self-start sm:self-auto">
-        <i class="fas fa-download mr-2 text-pastelPink"></i> Export Analytics CSV
-      </button>
-    </div>
+      <div class="header-actions">
+        <button id="btn-export-analytics-csv" class="brutal-btn">
+          <i class="fas fa-download"></i> Export Analytics CSV
+        </button>
+      </div>
+    </header>
 
     <!-- Analytics Controls -->
-    <div class="bg-cardWhite rounded-2xl p-4 mb-6 intelly-shadow flex flex-wrap items-center gap-4">
+    <div class="brutal-card" style="padding: 16px; margin-bottom: 24px; flex-direction: row; flex-wrap: wrap; gap: 16px; align-items: center;">
       <div class="flex items-center gap-2">
-        <label for="analytics-company-select" class="text-xs text-textMuted font-medium">Issuer:</label>
-        <select id="analytics-company-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Issuer:</span>
+        <select id="analytics-company-select" class="brutal-select">
           <option value="ALL">All Covered Universe</option>
           ${companies.map(c => `<option value="${c.ticker}">${c.name} (${c.ticker})</option>`).join("")}
         </select>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="analytics-metric-select" class="text-xs text-textMuted font-medium">Metric:</label>
-        <select id="analytics-metric-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Metric:</span>
+        <select id="analytics-metric-select" class="brutal-select">
           <option value="Revenue">Revenue</option>
           <option value="Gross Margin">Gross Margin</option>
           <option value="Diluted EPS">Diluted EPS</option>
@@ -55,8 +53,8 @@ export async function renderAnalytics(container) {
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="analytics-fy-select" class="text-xs text-textMuted font-medium">Fiscal Year:</label>
-        <select id="analytics-fy-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Fiscal Year:</span>
+        <select id="analytics-fy-select" class="brutal-select">
           <option value="ALL">All Available Years</option>
           <option value="2025">FY 2025</option>
           <option value="2024">FY 2024</option>
@@ -65,90 +63,91 @@ export async function renderAnalytics(container) {
       </div>
     </div>
 
-    <!-- KPI Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="analytics-kpi-grid">
+    <!-- KPI Grid (4 Cards) -->
+    <div class="grid-4" id="analytics-kpi-grid">
       <!-- Injected dynamically -->
     </div>
 
     <!-- Section A: Forecast Accuracy Over Time -->
-    <div class="bg-cardWhite rounded-3xl p-6 mb-6 intelly-shadow border border-gray-100">
-      <div class="flex justify-between items-center mb-6">
+    <div class="brutal-card" style="margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
         <div>
-          <h3 class="text-base font-bold text-textMain">Forecast Accuracy Over Time</h3>
-          <p class="text-xs text-textMuted mt-0.5">% Deviation from midpoint. Zero-line denotes exact midpoint adherence.</p>
+          <h3 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase;">Forecast Accuracy Over Time</h3>
+          <p style="font-weight: 600; font-size: 0.85rem; color: #666; margin-top: 4px;">% Deviation from management corridor midpoint. The 0% axis marks exact delivery.</p>
         </div>
-        <button id="btn-dl-accuracy-chart" class="px-3 py-1.5 bg-bgLight rounded-full text-xs text-textMuted hover:text-textMain font-semibold transition-colors">
-          <i class="fas fa-image mr-1 text-[10px] text-pastelPink"></i> Export PNG
+        <button id="btn-dl-accuracy-chart" class="brutal-btn" style="padding: 6px 12px; font-size: 0.75rem;">
+          <i class="fas fa-image"></i> Export PNG
         </button>
       </div>
-      <div class="chart-wrapper h-[300px] relative">
+      <div style="height: 320px; position: relative;">
         <canvas id="chart-accuracy-time"></canvas>
       </div>
     </div>
 
     <!-- Section B & C: Side-by-Side Charts -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      <!-- Section B: Guidance vs Actual -->
-      <div class="bg-cardWhite rounded-3xl p-6 intelly-shadow border border-gray-100">
-        <div class="flex justify-between items-center mb-6">
+    <div class="grid-3" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
+      <!-- Guidance vs Actual -->
+      <div class="brutal-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
           <div>
-            <h3 class="text-base font-bold text-textMain">Guidance vs Actual</h3>
-            <p class="text-xs text-textMuted mt-0.5" id="chart-b-subtitle">Grouped quarterly comparison</p>
+            <h3 style="font-size: 1.15rem; font-weight: 700; text-transform: uppercase;">Guidance vs Actual</h3>
+            <p id="chart-b-subtitle" style="font-weight: 600; font-size: 0.8rem; color: #666; margin-top: 4px;">Grouped quarterly comparison</p>
           </div>
-          <button id="btn-dl-guidance-chart" class="px-3 py-1.5 bg-bgLight rounded-full text-xs text-textMuted hover:text-textMain font-semibold transition-colors">
-            <i class="fas fa-image mr-1 text-[10px] text-pastelPink"></i> PNG
+          <button id="btn-dl-guidance-chart" class="brutal-btn" style="padding: 4px 10px; font-size: 0.75rem;">
+            PNG
           </button>
         </div>
-        <div class="chart-wrapper h-[260px] relative">
+        <div style="height: 280px; position: relative;">
           <canvas id="chart-analytics-guidance"></canvas>
         </div>
       </div>
 
-      <!-- Section C: Historical Outcomes Stacked -->
-      <div class="bg-cardWhite rounded-3xl p-6 intelly-shadow border border-gray-100">
-        <div class="flex justify-between items-center mb-6">
+      <!-- Historical Outcomes -->
+      <div class="brutal-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
           <div>
-            <h3 class="text-base font-bold text-textMain">Historical Outcomes</h3>
-            <p class="text-xs text-textMuted mt-0.5">Annual distribution of Exceeded, Met, and Missed forecasts</p>
+            <h3 style="font-size: 1.15rem; font-weight: 700; text-transform: uppercase;">Historical Outcomes</h3>
+            <p style="font-weight: 600; font-size: 0.8rem; color: #666; margin-top: 4px;">Annual distribution of Exceeded, Met, and Missed forecasts</p>
           </div>
-          <button id="btn-dl-outcomes-chart" class="px-3 py-1.5 bg-bgLight rounded-full text-xs text-textMuted hover:text-textMain font-semibold transition-colors">
-            <i class="fas fa-image mr-1 text-[10px] text-pastelPink"></i> PNG
+          <button id="btn-dl-outcomes-chart" class="brutal-btn" style="padding: 4px 10px; font-size: 0.75rem;">
+            PNG
           </button>
         </div>
-        <div class="chart-wrapper h-[260px] relative">
+        <div style="height: 280px; position: relative;">
           <canvas id="chart-analytics-historical"></canvas>
         </div>
       </div>
     </div>
 
     <!-- Section D: Metric-Level Breakdown -->
-    <div class="bg-cardWhite rounded-3xl intelly-shadow overflow-hidden mb-8 border border-gray-100">
-      <div class="p-5 border-b border-gray-100">
-        <h3 class="text-base font-bold text-textMain">Metric-Level Quantitative Audit</h3>
-        <p class="text-xs text-textMuted mt-0.5">Mathematical breakdown across individual financial statement line items</p>
+    <div style="margin-bottom: 24px; overflow-x: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase;">Metric-Level Quantitative Breakdown</h3>
+        <span class="badge" style="background: var(--main-yellow);">Mathematical Verification</span>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-bgLight/50 border-b border-gray-100 text-[10px] text-textMuted uppercase tracking-wider font-semibold">
-              <th class="py-3.5 px-5">Financial Metric</th>
-              <th class="py-3.5 px-5">Benchmark Direction</th>
-              <th class="py-3.5 px-5">Tracked</th>
-              <th class="py-3.5 px-5">Evaluated</th>
-              <th class="py-3.5 px-5">Beat Rate (%)</th>
-              <th class="py-3.5 px-5">Mean Abs. Dev.</th>
-              <th class="py-3.5 px-5">Net Forecast Bias</th>
-            </tr>
-          </thead>
-          <tbody id="metric-breakdown-tbody" class="text-xs text-textMain divide-y divide-gray-100">
-            <!-- Injected dynamically -->
-          </tbody>
-        </table>
-      </div>
+      <table class="brutal-table">
+        <thead>
+          <tr>
+            <th>Financial Metric</th>
+            <th>Optimization Benchmark</th>
+            <th>Tracked</th>
+            <th>Evaluated</th>
+            <th>Beat Rate (%)</th>
+            <th>Mean Abs. Dev.</th>
+            <th>Net Forecast Bias</th>
+          </tr>
+        </thead>
+        <tbody id="metric-breakdown-tbody">
+          <!-- Injected dynamically -->
+        </tbody>
+      </table>
+    </div>
 
-      <div class="p-4 border-t border-gray-100 bg-bgLight/30 text-xs text-textMuted leading-relaxed">
-        <strong class="text-textMain">Methodological Note:</strong> Mean Absolute Deviation (MAD) quantifies magnitude of variance from management guidance midpoint regardless of direction. Net Forecast Bias measures systematic tendency to under-guide (+) or over-promise (-).
+    <div class="brutal-card bg-yellow" style="padding: 16px; margin-bottom: 24px;">
+      <div style="font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 4px;">Methodological Note</div>
+      <div style="font-size: 0.85rem; font-weight: 600; line-height: 1.4;">
+        Mean Absolute Deviation (MAD) quantifies the raw magnitude of forecast error relative to management corridor midpoints. Net Forecast Bias measures systematic asymmetry: positive values denote conservative guidance (under-promising / over-delivering), while negative values indicate aggressive over-forecasting.
       </div>
     </div>
   `;
@@ -166,61 +165,43 @@ export async function renderAnalytics(container) {
     const kpis = calculateKPIs(filtered);
     const kpiGrid = document.getElementById("analytics-kpi-grid");
 
+    const adherence = (Number(kpis.metPct || 0) + Number(kpis.exceededPct || 0)).toFixed(1);
+
     kpiGrid.innerHTML = `
-      <div class="bg-cardWhite rounded-2xl p-5 intelly-shadow">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-8 h-8 rounded-full bg-bgLight flex items-center justify-center text-textMuted">
-            <i class="far fa-folder text-xs"></i>
-          </div>
-          <span class="text-xs text-textMuted font-semibold uppercase tracking-wider">Evaluated</span>
-        </div>
-        <p class="text-2xl font-bold text-textMain">${kpis.evaluatedCount} <span class="text-xs text-textMuted font-normal font-sans">/ ${kpis.totalTracked}</span></p>
-        <p class="text-[10px] text-textMuted mt-1">${kpis.pendingCount} pending releases</p>
+      <div class="brutal-card">
+        <div class="stat-label">Evaluated / Total</div>
+        <div class="stat-value">${kpis.evaluatedCount} <span style="font-size: 1.2rem; color: #666; margin-left: 8px;">/ ${kpis.totalTracked}</span></div>
+        <div style="font-size: 0.8rem; font-weight: 600; margin-top: 8px; color: #666;">${kpis.pendingCount} pending releases</div>
       </div>
 
-      <div class="bg-cardWhite rounded-2xl p-5 intelly-shadow">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-8 h-8 rounded-full bg-pastelYellow flex items-center justify-center text-yellow-800">
-            <i class="fas fa-calculator text-xs"></i>
-          </div>
-          <span class="text-xs text-textMuted font-semibold uppercase tracking-wider">Mean Abs. Dev.</span>
-        </div>
-        <p class="text-2xl font-bold text-textMain font-mono">${kpis.meanAbsDev}%</p>
-        <p class="text-[10px] text-textMuted mt-1">Avg deviation from midpoint</p>
+      <div class="brutal-card">
+        <div class="stat-label">Mean Abs. Dev.</div>
+        <div class="stat-value">${kpis.meanAbsDev}%</div>
+        <div style="font-size: 0.8rem; font-weight: 600; margin-top: 8px; color: #666;">Avg error from midpoint</div>
       </div>
 
-      <div class="bg-cardWhite rounded-2xl p-5 intelly-shadow">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-8 h-8 rounded-full bg-pastelGreen flex items-center justify-center text-green-800">
-            <i class="fas fa-balance-scale text-xs"></i>
-          </div>
-          <span class="text-xs text-textMuted font-semibold uppercase tracking-wider">Net Bias</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <p class="text-2xl font-bold font-mono ${kpis.netBias >= 0 ? "text-green-700" : "text-red-700"}">${kpis.netBias >= 0 ? "+" : ""}${kpis.netBias}%</p>
-          <span class="text-[10px] ${kpis.netBias >= 0 ? "bg-pastelGreen text-green-800" : "bg-pastelRed text-red-800"} px-2 py-0.5 rounded-full font-bold">
-            ${kpis.netBias >= 0 ? "Conservative" : "Aggressive"}
+      <div class="brutal-card">
+        <div class="stat-label">Net Forecast Bias</div>
+        <div class="stat-value" style="font-size: 2.5rem;">
+          ${kpis.netBias >= 0 ? "+" : ""}${kpis.netBias}%
+          <span class="stat-trend ${kpis.netBias >= 0 ? "bg-yellow" : ""}" style="font-size: 0.75rem; ${kpis.netBias < 0 ? "background: var(--main-pink);" : ""}">
+            ${kpis.netBias >= 0 ? "CONSERVATIVE" : "AGGRESSIVE"}
           </span>
         </div>
-        <p class="text-[10px] text-textMuted mt-1">Tendency to beat guidance</p>
+        <div style="font-size: 0.8rem; font-weight: 600; margin-top: 8px; color: #666;">Directional skew</div>
       </div>
 
-      <div class="bg-cardWhite rounded-2xl p-5 intelly-shadow">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-8 h-8 rounded-full bg-pastelBlue flex items-center justify-center text-blue-800">
-            <i class="fas fa-shield-alt text-xs"></i>
-          </div>
-          <span class="text-xs text-textMuted font-semibold uppercase tracking-wider">Adherence Rate</span>
-        </div>
-        <p class="text-2xl font-bold text-textMain font-mono">${(Number(kpis.metPct || 0) + Number(kpis.exceededPct || 0)).toFixed(1)}%</p>
-        <p class="text-[10px] text-textMuted mt-1">Met or exceeded targets</p>
+      <div class="brutal-card bg-yellow">
+        <div class="stat-label">Adherence Rate</div>
+        <div class="stat-value">${adherence}%</div>
+        <div style="font-size: 0.8rem; font-weight: 700; margin-top: 8px;">Met or exceeded corridors</div>
       </div>
     `;
 
     renderAccuracyOverTimeChart("chart-accuracy-time", filtered);
     renderGuidanceVsActualChart("chart-analytics-guidance", filtered, selectedMetric);
     renderHistoricalOutcomesChart("chart-analytics-historical", filtered);
-    document.getElementById("chart-b-subtitle").textContent = `${selectedMetric} · Midpoint vs Reported`;
+    document.getElementById("chart-b-subtitle").textContent = `${selectedMetric} · Midpoint vs Reported Actuals`;
 
     const metrics = ["Revenue", "Gross Margin", "Diluted EPS", "Operating Expenses"];
     const tbody = document.getElementById("metric-breakdown-tbody");
@@ -231,15 +212,17 @@ export async function renderAnalytics(container) {
       const direction = m === "Operating Expenses" ? "Lower is better" : "Higher is better";
 
       return `
-        <tr class="hover:bg-bgLight/50 transition-colors">
-          <td class="py-3.5 px-5 font-bold text-textMain">${m}</td>
-          <td class="py-3.5 px-5 text-xs text-textMuted">${direction}</td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMain">${mKpis.totalTracked}</td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMain">${mKpis.evaluatedCount}</td>
-          <td class="py-3.5 px-5 font-mono text-xs font-bold text-green-700">${mKpis.exceededPct}%</td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMain">${mKpis.meanAbsDev}%</td>
-          <td class="py-3.5 px-5 font-mono text-xs font-bold ${mKpis.netBias >= 0 ? "text-green-700" : "text-red-700"}">
-            ${mKpis.netBias >= 0 ? "+" : ""}${mKpis.netBias}%
+        <tr>
+          <td style="font-weight: 700; font-size: 0.95rem;">${m}</td>
+          <td style="font-weight: 600; color: #666;">${direction}</td>
+          <td style="font-weight: 700;">${mKpis.totalTracked}</td>
+          <td style="font-weight: 700;">${mKpis.evaluatedCount}</td>
+          <td style="font-weight: 700;">${mKpis.exceededPct}%</td>
+          <td style="font-weight: 700;">${mKpis.meanAbsDev}%</td>
+          <td style="font-weight: 700;">
+            <span class="stat-trend ${mKpis.netBias >= 0 ? "bg-yellow" : ""}" style="${mKpis.netBias < 0 ? "background: var(--main-pink);" : ""} margin: 0;">
+              ${mKpis.netBias >= 0 ? "+" : ""}${mKpis.netBias}%
+            </span>
           </td>
         </tr>
       `;
@@ -252,17 +235,17 @@ export async function renderAnalytics(container) {
 
   document.getElementById("btn-dl-accuracy-chart").addEventListener("click", () => {
     downloadChartAsPNG("chart-accuracy-time", "OutlookIQ-Accuracy-Over-Time.png");
-    showToast("Chart Downloaded", "Accuracy chart PNG saved.", "success");
+    showToast("Accuracy chart PNG exported");
   });
 
   document.getElementById("btn-dl-guidance-chart").addEventListener("click", () => {
     downloadChartAsPNG("chart-analytics-guidance", "OutlookIQ-Guidance-vs-Actual.png");
-    showToast("Chart Downloaded", "Guidance chart PNG saved.", "success");
+    showToast("Guidance chart PNG exported");
   });
 
   document.getElementById("btn-dl-outcomes-chart").addEventListener("click", () => {
     downloadChartAsPNG("chart-analytics-historical", "OutlookIQ-Outcomes-Historical.png");
-    showToast("Chart Downloaded", "Outcomes chart PNG saved.", "success");
+    showToast("Outcomes chart PNG exported");
   });
 
   document.getElementById("btn-export-analytics-csv").addEventListener("click", () => {
@@ -285,7 +268,7 @@ export async function renderAnalytics(container) {
       };
     });
     exportToCSV(`OutlookIQ-Analytics-Summary-${Date.now()}.csv`, rows);
-    showToast("CSV Exported", "Analytics dataset downloaded.", "success");
+    showToast(`Exported ${rows.length} analytics records.`);
   });
 
   updateAnalytics();

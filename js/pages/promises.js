@@ -1,6 +1,6 @@
 /**
- * PAGE 3 — Promise Tracker (Intelly Aesthetic)
- * Guidance audit ledger styled with Intelly warm canvas, white rounded-3xl card, and pastel badges.
+ * PAGE 3 — Promise Tracker (Neo-Brutalist Design)
+ * Audited Guidance Ledger styled with bold black borders (3px), hard drop-shadows (6px), Space Grotesk.
  */
 
 import { api } from "../api.js";
@@ -25,46 +25,43 @@ export async function renderPromises(container, queryParams = {}) {
 
   container.innerHTML = `
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
-      <div>
-        <div class="flex items-center text-xs text-textMuted font-medium mb-1">
-          <a href="#dashboard" class="hover:text-textMain transition-colors">OutlookIQ</a>
-          <i class="fas fa-chevron-right mx-2 text-[9px]"></i>
-          <span class="text-textMain font-semibold">Promise Tracker</span>
-        </div>
-        <h2 class="text-2xl font-bold text-textMain">Management Promise Tracker</h2>
-        <p class="text-textMuted text-xs mt-1">A comprehensive historical ledger of forward-looking guidance vs reported quarterly earnings.</p>
+    <header class="header">
+      <div class="header-title">
+        <h1>Promise Tracker</h1>
+        <div class="badge">Audited Ledger</div>
+        <span style="margin-left: 12px; font-weight: 700; font-size: 0.9rem;">Deterministic Guidance vs Actuals</span>
       </div>
-      <div class="flex items-center space-x-3">
-        <button id="btn-export-tracker-csv" class="flex items-center px-4 py-2 bg-cardWhite border border-gray-100 rounded-full text-textMain hover:bg-bgLight transition-colors text-xs font-semibold intelly-shadow">
-          <i class="fas fa-download mr-2 text-pastelPink"></i> Export CSV
+      <div class="header-actions">
+        <button id="btn-export-tracker-csv" class="brutal-btn">
+          <i class="fas fa-download"></i> Export CSV
         </button>
       </div>
-    </div>
+    </header>
 
     <!-- Filter Control Bar -->
-    <div class="bg-cardWhite rounded-2xl p-4 mb-6 intelly-shadow flex flex-wrap items-center gap-4">
-      <div class="relative flex-1 min-w-[220px]">
-        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-pastelPink text-xs"></i>
+    <div class="brutal-card" style="padding: 16px; margin-bottom: 24px; flex-direction: row; flex-wrap: wrap; gap: 14px; align-items: center;">
+      <div style="flex: 1; min-width: 240px; position: relative;">
+        <i class="fas fa-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px;"></i>
         <input
           type="text"
           id="tracker-search-input"
-          placeholder="Search ticker, metric, quarter (NVTD, Revenue, Q3)..."
-          class="w-full bg-bgLight rounded-full py-2 pl-10 pr-4 text-xs text-textMain placeholder-textMuted outline-none border border-transparent focus:border-pastelPink transition-colors"
+          placeholder="SEARCH TICKER, METRIC, QUARTER (NVDA, REVENUE, Q3)..."
+          class="brutal-border"
+          style="width: 100%; padding: 10px 14px 10px 38px; font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; background: #fff;"
         />
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="tracker-company-filter" class="text-xs text-textMuted font-medium">Company:</label>
-        <select id="tracker-company-filter" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Company:</span>
+        <select id="tracker-company-filter" class="brutal-select">
           <option value="ALL">All Companies (${companies.length})</option>
           ${companies.map(c => `<option value="${c.ticker}" ${state.company === c.ticker ? "selected" : ""}>${c.ticker} - ${c.name}</option>`).join("")}
         </select>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="tracker-metric-filter" class="text-xs text-textMuted font-medium">Metric:</label>
-        <select id="tracker-metric-filter" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Metric:</span>
+        <select id="tracker-metric-filter" class="brutal-select">
           <option value="ALL">All Metrics</option>
           <option value="Revenue">Revenue</option>
           <option value="Gross Margin">Gross Margin</option>
@@ -74,8 +71,8 @@ export async function renderPromises(container, queryParams = {}) {
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="tracker-fy-filter" class="text-xs text-textMuted font-medium">FY:</label>
-        <select id="tracker-fy-filter" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">FY:</span>
+        <select id="tracker-fy-filter" class="brutal-select">
           <option value="ALL">All Years</option>
           <option value="2025">FY 2025</option>
           <option value="2024">FY 2024</option>
@@ -84,8 +81,8 @@ export async function renderPromises(container, queryParams = {}) {
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="tracker-outcome-filter" class="text-xs text-textMuted font-medium">Outcome:</label>
-        <select id="tracker-outcome-filter" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Outcome:</span>
+        <select id="tracker-outcome-filter" class="brutal-select">
           <option value="ALL">All Outcomes</option>
           <option value="Exceeded">Exceeded (Beat)</option>
           <option value="Met">Met (Within Range)</option>
@@ -94,71 +91,63 @@ export async function renderPromises(container, queryParams = {}) {
         </select>
       </div>
 
-      <button id="btn-reset-filters" class="px-3.5 py-1.5 bg-bgLight rounded-full text-xs text-textMuted hover:text-textMain font-medium transition-colors">
+      <button id="btn-reset-filters" class="brutal-btn" style="background: var(--main-yellow);">
         Reset
       </button>
     </div>
 
     <!-- Main Table Container -->
-    <div class="bg-cardWhite rounded-3xl intelly-shadow overflow-hidden mb-8 border border-gray-100">
-      <div class="p-5 border-b border-gray-100 flex justify-between items-center">
-        <div>
-          <h3 id="table-results-count" class="text-base font-bold text-textMain">Audited Guidance Statements</h3>
-          <p class="text-xs text-textMuted mt-0.5">Click any row or 'View Evidence' for calculation trail & earnings transcripts</p>
-        </div>
-        <div class="bg-sidebarDark text-white px-3.5 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1.5">
-          <span class="w-2 h-2 bg-pastelGreen rounded-full"></span>
-          <span>Deterministic Audit Active</span>
-        </div>
+    <div style="margin-bottom: 24px; overflow-x: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 id="table-results-count" style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase;">Audited Guidance Statements</h3>
+        <span class="badge" style="background: var(--main-teal);">Deterministic Match Active</span>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-bgLight/50 border-b border-gray-100 text-[10px] text-textMuted uppercase tracking-wider font-semibold">
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="company">
-                Company <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="announcementDate">
-                Announced <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="targetQuarter">
-                Target <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="metric">
-                Metric <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5">Guidance Corridor</th>
-              <th class="py-3.5 px-5">Reported</th>
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="diffPct">
-                Variance <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5 cursor-pointer hover:text-textMain select-none sortable" data-sort="outcome">
-                Outcome <span class="sort-icon ml-1">↕</span>
-              </th>
-              <th class="py-3.5 px-5 text-right">Audit</th>
-            </tr>
-          </thead>
-          <tbody id="tracker-tbody" class="text-xs text-textMain divide-y divide-gray-100">
-            <!-- Injected dynamically -->
-          </tbody>
-        </table>
-      </div>
+      <table class="brutal-table">
+        <thead>
+          <tr>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="company">
+              Company <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="announcementDate">
+              Announced <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="targetQuarter">
+              Target <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="metric">
+              Metric <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th>Guidance Corridor</th>
+            <th>Reported Actual</th>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="diffPct">
+              Variance <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th class="cursor-pointer hover:underline select-none sortable" data-sort="outcome">
+              Outcome <span class="sort-icon ml-1">↕</span>
+            </th>
+            <th style="text-align: right;">Audit Trail</th>
+          </tr>
+        </thead>
+        <tbody id="tracker-tbody">
+          <!-- Injected dynamically -->
+        </tbody>
+      </table>
+    </div>
 
-      <!-- Pagination Footer -->
-      <div class="flex flex-col sm:flex-row justify-between items-center p-4 border-t border-gray-100 bg-bgLight/30 gap-3">
-        <div id="pagination-info-text" class="text-xs text-textMuted font-medium">Showing 1 to 8 of 0 records</div>
-        <div class="flex items-center space-x-2">
-          <button id="btn-prev-page" class="px-3 py-1.5 bg-cardWhite border border-gray-200 rounded-full text-xs font-semibold text-textMain hover:bg-bgLight disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-            <i class="fas fa-chevron-left mr-1 text-[10px]"></i> Previous
-          </button>
-          <span id="page-num-display" class="px-3 py-1 bg-cardWhite rounded-full text-xs font-mono font-bold text-textMain border border-gray-100">
-            Page 1
-          </span>
-          <button id="btn-next-page" class="px-3 py-1.5 bg-cardWhite border border-gray-200 rounded-full text-xs font-semibold text-textMain hover:bg-bgLight disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-            Next <i class="fas fa-chevron-right ml-1 text-[10px]"></i>
-          </button>
-        </div>
+    <!-- Pagination Footer -->
+    <div class="brutal-card" style="padding: 16px; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div id="pagination-info-text" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Showing 1 to 8 of 0 records</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button id="btn-prev-page" class="brutal-btn" style="padding: 6px 14px;">
+          &larr; Prev
+        </button>
+        <span id="page-num-display" class="brutal-border" style="padding: 6px 14px; font-weight: 700; font-size: 0.85rem; background: #fff;">
+          Page 1
+        </span>
+        <button id="btn-next-page" class="brutal-btn" style="padding: 6px 14px;">
+          Next &rarr;
+        </button>
       </div>
     </div>
   `;
@@ -251,52 +240,56 @@ export async function renderPromises(container, queryParams = {}) {
     const tbody = document.getElementById("tracker-tbody");
 
     if (pageRecords.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 text-textMuted font-medium">No guidance records match your filter criteria.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; font-weight: 700; text-transform: uppercase;">No guidance records match your filter criteria.</td></tr>`;
       return;
     }
 
-    const pastelTickerBadges = {
-      NVTD: "bg-pastelGreen text-green-800",
-      APXC: "bg-pastelBlue text-blue-800",
-      LMBO: "bg-pastelPink text-pink-900",
-      SOLR: "bg-pastelYellow text-yellow-900"
+    const badgeBgMap = {
+      NVDA: "bg-teal",
+      MSFT: "bg-yellow",
+      AAPL: "bg-pink",
+      NVTD: "bg-teal",
+      APXC: "bg-yellow",
+      LMBO: "bg-pink",
+      SOLR: "bg-yellow"
     };
 
     tbody.innerHTML = pageRecords.map(p => {
       const ev = evaluatePromise(p);
       const rangeStr = `${formatValue(p.guidanceLower, p.unit)} - ${formatValue(p.guidanceUpper, p.unit)}`;
-      const actualStr = p.actual !== null ? formatValue(p.actual, p.unit) : '<span class="text-amber-700 bg-pastelYellow px-2 py-0.5 rounded-full text-[10px] font-semibold">Pending</span>';
+      const actualStr = p.actual !== null ? formatValue(p.actual, p.unit) : '<span class="badge" style="background: #e5e5e5;">Pending</span>';
       const devStr = ev.diffPct !== null ? formatPct(ev.diffPct) : "—";
 
       let outcomeMarkup = "";
       if (ev.outcome === "Exceeded") {
-        outcomeMarkup = `<span class="bg-pastelGreen text-green-800 text-[10px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-arrow-up mr-1 text-[8px]"></i> Exceeded</span>`;
+        outcomeMarkup = `<span class="stat-trend bg-yellow" style="margin: 0;">↗ EXCEEDED</span>`;
       } else if (ev.outcome === "Met") {
-        outcomeMarkup = `<span class="bg-pastelBlue text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-check mr-1 text-[8px]"></i> Met</span>`;
+        outcomeMarkup = `<span class="stat-trend" style="background: var(--main-teal); margin: 0;">● MET</span>`;
       } else if (ev.outcome === "Missed") {
-        outcomeMarkup = `<span class="bg-pastelRed text-red-800 text-[10px] font-bold px-2.5 py-1 rounded-full"><i class="fas fa-arrow-down mr-1 text-[8px]"></i> Missed</span>`;
+        outcomeMarkup = `<span class="stat-trend" style="background: var(--main-pink); margin: 0;">↘ MISSED</span>`;
       } else {
-        outcomeMarkup = `<span class="bg-pastelYellow text-yellow-900 text-[10px] font-bold px-2.5 py-1 rounded-full"><i class="far fa-clock mr-1 text-[8px]"></i> Pending</span>`;
+        outcomeMarkup = `<span class="stat-trend" style="background: #e5e5e5; margin: 0;">◌ PENDING</span>`;
       }
 
-      const devClass = ev.diffPct > 0 ? "text-green-700 font-bold" : ev.diffPct < 0 ? "text-red-700 font-bold" : "text-textMain";
-      const tickerBadge = pastelTickerBadges[p.ticker] || "bg-bgLight text-textMain";
+      const tickerBadge = badgeBgMap[p.ticker] || "bg-yellow";
 
       return `
-        <tr class="hover:bg-bgLight/60 transition-colors cursor-pointer group" data-promise-id="${p.id}">
-          <td class="py-3.5 px-5 flex items-center gap-2">
-            <span class="text-[10px] font-mono font-bold ${tickerBadge} px-2 py-0.5 rounded-lg">${p.ticker}</span>
-            <span class="font-bold text-textMain group-hover:text-black transition-colors">${p.companyName}</span>
+        <tr style="cursor: pointer;" data-promise-id="${p.id}">
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="badge ${tickerBadge}" style="padding: 2px 6px; font-size: 0.75rem;">${p.ticker}</span>
+              <strong style="font-size: 0.9rem;">${p.companyName}</strong>
+            </div>
           </td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMuted">${p.announcementDate}</td>
-          <td class="py-3.5 px-5 font-semibold text-textMain">${p.targetQuarter}</td>
-          <td class="py-3.5 px-5 text-textMain">${p.metric}</td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMuted">${rangeStr}</td>
-          <td class="py-3.5 px-5 font-mono text-xs font-bold text-textMain">${actualStr}</td>
-          <td class="py-3.5 px-5 font-mono text-xs ${devClass}">${devStr}</td>
-          <td class="py-3.5 px-5">${outcomeMarkup}</td>
-          <td class="py-3.5 px-5 text-right">
-            <button class="bg-sidebarDark text-white px-3 py-1.5 rounded-full text-[11px] font-semibold hover:bg-pastelPink hover:text-sidebarDark transition-all btn-evidence" data-promise-id="${p.id}">
+          <td style="font-weight: 600;">${p.announcementDate}</td>
+          <td style="font-weight: 700; text-transform: uppercase;">${p.targetQuarter}</td>
+          <td style="font-weight: 700;">${p.metric}</td>
+          <td style="font-weight: 600;">${rangeStr}</td>
+          <td style="font-weight: 700; font-size: 0.95rem;">${actualStr}</td>
+          <td style="font-weight: 700;">${devStr}</td>
+          <td>${outcomeMarkup}</td>
+          <td style="text-align: right;">
+            <button class="brutal-btn" style="padding: 4px 10px; font-size: 0.75rem; background: var(--main-yellow);" data-promise-id="${p.id}">
               Inspect &rarr;
             </button>
           </td>
@@ -358,7 +351,7 @@ export async function renderPromises(container, queryParams = {}) {
     document.getElementById("tracker-outcome-filter").value = "ALL";
 
     renderTable();
-    showToast("Filters Reset", "Viewing all guidance records.", "info");
+    showToast("Filters Reset — viewing all records");
   });
 
   document.getElementById("btn-prev-page").addEventListener("click", () => {
@@ -411,7 +404,7 @@ export async function renderPromises(container, queryParams = {}) {
       };
     });
     exportToCSV(`OutlookIQ-Promises-Ledger-${Date.now()}.csv`, rows);
-    showToast("CSV Exported", `Exported ${rows.length} promise records.`, "success");
+    showToast(`Exported ${rows.length} guidance records.`);
   });
 
   renderTable();

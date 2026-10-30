@@ -30,9 +30,11 @@ class CitationItem(BaseModel):
 
 class ChatResponse(BaseModel):
     answer: str
-    citations: List[Dict[str, Any]]
-    related_promises: List[Dict[str, Any]]
+    citations: List[Dict[str, Any]] = Field(default_factory=list)
+    sources: Optional[List[Dict[str, Any]]] = Field(default_factory=list)
+    related_promises: List[Dict[str, Any]] = Field(default_factory=list)
     confidence: str
+    telemetry: Optional[Dict[str, Any]] = None
 
 @router.post("", response_model=ChatResponse)
 def chat_with_rag(req: ChatRequest, db: Session = Depends(get_db)):

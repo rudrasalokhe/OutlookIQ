@@ -272,10 +272,11 @@ export class ApiService {
           const data = await res.json();
           return {
             answer: data.answer,
-            sources: data.citations || [],
-            citations: data.citations || [],
+            sources: data.citations || data.sources || [],
+            citations: data.citations || data.sources || [],
             related_promises: data.related_promises || [],
             confidence: data.confidence,
+            telemetry: data.telemetry || null,
             isDemo: false
           };
         }

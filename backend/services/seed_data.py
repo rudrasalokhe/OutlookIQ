@@ -45,6 +45,14 @@ INITIAL_COMPANIES = [
         "sector": "Cloud Infrastructure",
         "market_cap": "$42.5B",
         "sec_cik": "0001854920"
+    },
+    {
+        "id": "NVTD",
+        "name": "NovaTech Dynamics",
+        "ticker": "NVTD",
+        "sector": "Industrial Tech & Packaging",
+        "market_cap": "$28.4B",
+        "sec_cik": "0001648291"
     }
 ]
 
@@ -64,6 +72,25 @@ GAAP and non-GAAP gross margins are expected to be 73.0% and 73.5%, respectively
 GAAP and non-GAAP operating expenses are expected to be approximately $4.8 billion and $3.4 billion, respectively.
 GAAP and non-GAAP other income and expense are expected to be an income of approximately $400 million, excluding gains and losses from non-affiliated investments.
 GAAP and non-GAAP tax rates are expected to be 16.5%, plus or minus 1%, excluding any discrete items.
+"The age of AI is in full steam, propelling a global shift to NVIDIA computing," said Jensen Huang, founder and CEO of NVIDIA.
+        """
+    },
+    {
+        "id": "DOC-NVDA-10Q-Q3FY25",
+        "company_id": "NVDA",
+        "title": "NVIDIA Form 10-Q SEC Quarterly Filing (Q3 FY25)",
+        "document_type": "Form 10-Q",
+        "publication_date": "2024-11-20",
+        "fiscal_period": "Q3 FY25",
+        "text": """
+UNITED STATES SECURITIES AND EXCHANGE COMMISSION — WASHINGTON, D.C. 20549 — FORM 10-Q.
+For the quarterly period ended October 27, 2024. Commission File Number: 000-23985. NVIDIA CORPORATION.
+CONDENSED CONSOLIDATED STATEMENTS OF INCOME (Unaudited):
+Total Revenue for Q3 FY25 reached $35,082 million ($35.08 billion), compared to $18,120 million in the prior year period.
+Data Center revenue was $30,771 million, up 112% year-over-year. Gaming revenue was $3,279 million, up 15% year-over-year.
+GAAP Gross Margin was 74.6%, and Non-GAAP Gross Margin reached 75.1%, directly exceeding the 75.0% midpoint guidance issued in Q2.
+Operating Income was $21,869 million. Net Income was $19,309 million. Diluted earnings per share (EPS) was $0.78, surpassing expectations.
+Cash, cash equivalents and marketable securities stood at $38,487 million.
         """
     },
     {
@@ -76,15 +103,16 @@ GAAP and non-GAAP tax rates are expected to be 16.5%, plus or minus 1%, excludin
         "text": """
 SANTA CLARA, Calif. — August 28, 2024 — NVIDIA reported revenue for the second quarter ended July 28, 2024, of $30.04 billion, up 15% from the previous quarter and up 122% from a year ago.
 NVIDIA outlook for the third quarter of fiscal 2025:
-Revenue is expected to be $32.5 billion, plus or minus 2%.
+Revenue is expected to be $32.5 billion, plus or minus 2% (corridor: $31.85 billion to $33.15 billion).
 GAAP and non-GAAP gross margins are expected to be 74.4% and 75.0%, respectively, plus or minus 50 basis points.
 GAAP and non-GAAP operating expenses are expected to be approximately $4.3 billion and $3.0 billion, respectively.
+Colette Kress, EVP and CFO of NVIDIA: "Hopper demand remains exceptionally strong, and anticipation for Blackwell is incredible. We are guiding third quarter revenue to $32.5 billion."
         """
     },
     {
         "id": "DOC-MSFT-Q1FY25",
         "company_id": "MSFT",
-        "title": "Microsoft Cloud Strength Drives First Quarter Results",
+        "title": "Microsoft Cloud Strength Drives First Quarter Results & Q2 Outlook",
         "document_type": "Earnings Release",
         "publication_date": "2024-10-30",
         "fiscal_period": "Q1 FY25",
@@ -92,6 +120,38 @@ GAAP and non-GAAP operating expenses are expected to be approximately $4.3 billi
 REDMOND, Wash. — Oct. 30, 2024 — Microsoft Corp. today announced first-quarter revenue of $65.6 billion, up 16% year-over-year.
 Amy Hood, executive vice president and chief financial officer:
 "In Intelligent Cloud, we expect revenue of $25.25 billion to $25.55 billion. In Productivity and Business Processes, we expect revenue between $20.4 billion and $20.7 billion. For total company revenue in Q2 FY25, we expect revenue between $68.1 billion and $69.1 billion."
+Satya Nadella, chairman and chief executive officer: "AI-driven transformation is changing work, work artifacts, and workflow across every role, function, and business process."
+        """
+    },
+    {
+        "id": "DOC-MSFT-10Q-Q2FY25",
+        "company_id": "MSFT",
+        "title": "Microsoft Form 10-Q SEC Quarterly Filing (Q2 FY25)",
+        "document_type": "Form 10-Q",
+        "publication_date": "2025-01-29",
+        "fiscal_period": "Q2 FY25",
+        "text": """
+UNITED STATES SECURITIES AND EXCHANGE COMMISSION — FORM 10-Q.
+For the quarterly period ended December 31, 2024. Commission File Number: 001-37845. MICROSOFT CORPORATION.
+Total revenue for the quarter was $69,631 million ($69.63 billion), an increase of 12% compared to the prior year.
+Reported total revenue of $69.63 billion surpassed the upper boundary of management guidance corridor ($68.1B to $69.1B) by $531 million (+1.5% above midpoint).
+Intelligent Cloud segment delivered $25,950 million. Productivity and Business Processes delivered $20,850 million.
+Operating income was $31,650 million. Diluted earnings per share was $3.23.
+        """
+    },
+    {
+        "id": "DOC-AAPL-10K-FY24",
+        "company_id": "AAPL",
+        "title": "Apple Inc. Form 10-K SEC Annual Report & Guidance Summary",
+        "document_type": "Form 10-K",
+        "publication_date": "2024-10-31",
+        "fiscal_period": "Q4 FY24",
+        "text": """
+UNITED STATES SECURITIES AND EXCHANGE COMMISSION — FORM 10-K.
+APPLE INC. For the fiscal year ended September 28, 2024.
+Revenue for Q4 FY24 reached $94.93 billion, up 6% year-over-year. Services revenue reached an all-time record of $24.97 billion.
+During the earnings call, Luca Maestri (CFO) provided outlook for Q1 FY25:
+"We expect our December quarter total company revenue to grow low to mid-single digits year-over-year. We expect gross margin to be between 46.0% and 47.0%. Operating expenses are modeled between $15.3 billion and $15.5 billion."
         """
     },
     {
@@ -104,7 +164,21 @@ Amy Hood, executive vice president and chief financial officer:
         "text": """
 AUSTIN, Texas — April 18, 2024 — Apex Cloud Systems announced revenue of $665.0 million for Q1 FY24.
 Management reiterated confidence in its cloud pipeline:
-"For Q1 FY24, we had guided revenue between $660.0 million and $680.0 million. Delivering $665.0 million represents solid execution directly in line with our communicated guidance midpoint."
+"For Q1 FY24, we had guided revenue between $660.0 million and $680.0 million. Delivering $665.0 million represents solid execution directly in line with our communicated guidance midpoint of $670.0 million (Outcome: Met within corridor)."
+        """
+    },
+    {
+        "id": "DOC-NVTD-Q2FY25",
+        "company_id": "NVTD",
+        "title": "NovaTech Dynamics Form 10-Q & Guidance Evaluation",
+        "document_type": "Form 10-Q",
+        "publication_date": "2024-08-28",
+        "fiscal_period": "Q2 FY25",
+        "text": """
+NovaTech Dynamics (NVTD) Q2 FY25 Operating Expenses Reconciliation:
+In the Q1 FY25 conference call, CFO Marcus Holloway stated: "Operating expenses are planned around $1.0 billion ($980 million to $1,020 million) as we sustain aggressive R&D investments."
+In the Q2 FY25 Form 10-Q filed August 28, 2024, actual reported operating expenses were $1,045.0 million.
+Because operating expenses is a lower-is-better metric, exceeding the upper guidance corridor of $1,020.0 million constitutes a Miss (+4.5% budget overrun).
         """
     }
 ]
@@ -265,21 +339,21 @@ def seed_database(db: Session):
             db.add(doc)
             db.commit()
 
-            # Index chunks in vector store
-            chunks = chunk_financial_document(
-                clean_text,
-                metadata={
-                    "doc_id": d["id"],
-                    "company_id": d["company_id"],
-                    "ticker": d["company_id"],
-                    "title": d["title"],
-                    "document_type": d["document_type"],
-                    "publication_date": d["publication_date"],
-                    "fiscal_period": d["fiscal_period"],
-                    "reporting_quarter": d["fiscal_period"]
-                }
-            )
-            vector_store.add_chunks(chunks)
+        # Always ensure chunks are indexed in vector store
+        chunks = chunk_financial_document(
+            clean_text,
+            metadata={
+                "doc_id": d["id"],
+                "company_id": d["company_id"],
+                "ticker": d["company_id"],
+                "title": d["title"],
+                "document_type": d["document_type"],
+                "publication_date": d["publication_date"],
+                "fiscal_period": d["fiscal_period"],
+                "reporting_quarter": d["fiscal_period"]
+            }
+        )
+        vector_store.add_chunks(chunks)
 
     # 3. Guidance, Actual Results, and Evaluations
     for g in INITIAL_GUIDANCE:

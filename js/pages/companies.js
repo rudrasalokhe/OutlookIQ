@@ -1,6 +1,6 @@
 /**
- * PAGE 2 — Company Explorer (Intelly Aesthetic)
- * Universe browser styled with Intelly warm canvas, white rounded cards, and pastel accents.
+ * PAGE 2 — Company Explorer (Neo-Brutalist Design)
+ * High-contrast brutalist cards, bold black borders (3px), hard drop-shadows (6px), Space Grotesk.
  */
 
 import { api } from "../api.js";
@@ -12,37 +12,36 @@ export async function renderCompanies(container) {
 
   container.innerHTML = `
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-8 gap-4">
-      <div>
-        <div class="flex items-center text-xs text-textMuted font-medium mb-1">
-          <a href="#dashboard" class="hover:text-textMain transition-colors">OutlookIQ</a>
-          <i class="fas fa-chevron-right mx-2 text-[9px]"></i>
-          <span class="text-textMain font-semibold">Universe Explorer</span>
-        </div>
-        <h2 class="text-2xl font-bold text-textMain">Tracked Companies</h2>
-        <p class="text-textMuted text-xs mt-1">Discover historical management guidance, forecast accuracy, and actual reported outcomes.</p>
+    <header class="header">
+      <div class="header-title">
+        <h1>Tracked Issuers</h1>
+        <div class="badge">Coverage Universe</div>
+        <span style="margin-left: 12px; font-weight: 700; font-size: 0.9rem;">${companies.length} Active Tier-1 Corporate Issuers</span>
       </div>
-      <div class="bg-cardWhite text-textMain border border-gray-100 px-4 py-2 rounded-full text-xs font-medium flex items-center gap-2 intelly-shadow self-start sm:self-auto">
-        <span class="w-2 h-2 bg-pastelGreen rounded-full"></span>
-        <span>Coverage Active (${companies.length} Tier-1 Issuers)</span>
+      <div class="header-actions">
+        <label class="brutal-card flex items-center gap-2 cursor-pointer select-none" style="padding: 8px 16px; flex-direction: row; margin: 0;">
+          <input type="checkbox" id="watchlist-only-checkbox" style="cursor: pointer; width: 18px; height: 18px; accent-color: #000;" />
+          <span style="font-weight: 700; font-size: 0.8rem; text-transform: uppercase;">Watchlist Only</span>
+        </label>
       </div>
-    </div>
+    </header>
 
     <!-- Filter Control Bar -->
-    <div class="bg-cardWhite rounded-2xl p-4 mb-6 intelly-shadow flex flex-wrap items-center gap-4">
-      <div class="relative flex-1 min-w-[260px]">
-        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-pastelPink text-xs"></i>
+    <div class="brutal-card" style="padding: 16px; margin-bottom: 24px; flex-direction: row; flex-wrap: wrap; gap: 16px; align-items: center;">
+      <div style="flex: 1; min-width: 240px; position: relative;">
+        <i class="fas fa-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px;"></i>
         <input
           type="text"
           id="company-search-input"
-          placeholder="Search company, ticker, or industry..."
-          class="w-full bg-bgLight rounded-full py-2 pl-10 pr-4 text-xs text-textMain placeholder-textMuted outline-none border border-transparent focus:border-pastelPink transition-colors"
+          placeholder="SEARCH COMPANY, TICKER, OR INDUSTRY..."
+          class="brutal-border"
+          style="width: 100%; padding: 10px 14px 10px 38px; font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; background: #fff;"
         />
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="company-sector-filter" class="text-xs text-textMuted font-medium">Sector:</label>
-        <select id="company-sector-filter" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Sector:</span>
+        <select id="company-sector-filter" class="brutal-select">
           <option value="ALL">All Sectors</option>
           <option value="Technology">Technology</option>
           <option value="Healthcare">Healthcare</option>
@@ -51,23 +50,18 @@ export async function renderCompanies(container) {
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="company-sort-select" class="text-xs text-textMuted font-medium">Sort By:</label>
-        <select id="company-sort-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Sort:</span>
+        <select id="company-sort-select" class="brutal-select">
           <option value="marketcap">Market Cap (Highest)</option>
           <option value="coverage">Guidance Coverage</option>
           <option value="forecasts">Most Forecasts</option>
           <option value="name">Company Name (A-Z)</option>
         </select>
       </div>
-
-      <label class="flex items-center space-x-2 text-xs text-textMuted hover:text-textMain cursor-pointer select-none bg-bgLight px-3 py-1.5 rounded-full transition-colors">
-        <input type="checkbox" id="watchlist-only-checkbox" class="rounded text-sidebarDark focus:ring-0 cursor-pointer" />
-        <span>Watchlist Only</span>
-      </label>
     </div>
 
     <!-- Grid of Companies (3 columns) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="companies-grid-container">
+    <div class="grid-3" id="companies-grid-container">
       <!-- Injected dynamically -->
     </div>
   `;
@@ -114,107 +108,104 @@ export async function renderCompanies(container) {
 
     if (list.length === 0) {
       grid.innerHTML = `
-        <div class="col-span-full bg-cardWhite rounded-3xl p-12 text-center intelly-shadow">
-          <div class="w-12 h-12 rounded-full bg-bgLight mx-auto flex items-center justify-center text-textMuted mb-3">
-            <i class="fas fa-search text-base"></i>
-          </div>
-          <h3 class="text-base font-bold text-textMain mb-1">No matching companies found</h3>
-          <p class="text-xs text-textMuted">Try clearing your search query or unchecking the Watchlist filter.</p>
+        <div class="brutal-card bg-yellow" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+          <h3 style="font-size: 1.5rem; text-transform: uppercase; margin-bottom: 8px;">No matching corporate issuers</h3>
+          <p style="font-weight: 600;">Clear your search filter or uncheck the watchlist filter to inspect full coverage.</p>
         </div>
       `;
       return;
     }
 
-    const pastelBgMap = {
-      NVTD: "bg-pastelGreen text-green-800",
-      APXC: "bg-pastelBlue text-blue-800",
-      LMBO: "bg-pastelPink text-pink-900",
-      SOLR: "bg-pastelYellow text-yellow-900"
+    const badgeBgMap = {
+      NVDA: "bg-teal",
+      MSFT: "bg-yellow",
+      AAPL: "bg-pink",
+      NVTD: "bg-teal",
+      APXC: "bg-yellow",
+      LMBO: "bg-pink",
+      SOLR: "bg-yellow"
     };
 
     grid.innerHTML = list.map(comp => {
       const isStarred = watchlist.includes(comp.ticker);
       const compPromises = allPromises.filter(p => p.ticker === comp.ticker);
-      const badgeStyle = pastelBgMap[comp.ticker] || "bg-bgLight text-textMain";
+      const badgeStyle = badgeBgMap[comp.ticker] || "bg-yellow";
 
       return `
-        <div class="bg-cardWhite rounded-3xl p-6 intelly-shadow flex flex-col relative group border border-transparent hover:border-gray-200 transition-all">
-          <button class="absolute top-6 right-6 text-base ${isStarred ? "text-amber-500" : "text-gray-300 hover:text-amber-500"} transition-colors" data-star-ticker="${comp.ticker}" title="${isStarred ? "Remove from Watchlist" : "Add to Watchlist"}">
-            <i class="${isStarred ? "fas fa-star" : "far fa-star"}"></i>
-          </button>
-          
-          <div class="flex items-center gap-3.5 mb-4">
-            <div class="w-11 h-11 rounded-2xl ${badgeStyle} flex items-center justify-center font-bold text-sm shrink-0">
-              ${comp.monogram}
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-mono font-bold text-textMain">${comp.ticker}</span>
-                <span class="text-[10px] bg-bgLight text-textMuted px-2 py-0.5 rounded-full font-medium">${comp.sector}</span>
+        <div class="brutal-card relative" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="brutal-border ${badgeStyle}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem;">
+                  ${comp.monogram || comp.ticker.slice(0, 2)}
+                </div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.8rem; text-transform: uppercase; color: #666;">${comp.sector}</div>
+                  <h3 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase; line-height: 1.1;">${comp.name}</h3>
+                </div>
               </div>
-              <h3 class="text-base font-bold text-textMain leading-tight mt-0.5">${comp.name}</h3>
+              <button class="brutal-btn" style="padding: 6px 10px; background: ${isStarred ? "var(--main-yellow)" : "#fff"};" data-star-ticker="${comp.ticker}" title="${isStarred ? "Remove from Watchlist" : "Add to Watchlist"}">
+                <i class="${isStarred ? "fas fa-star" : "far fa-star"}"></i>
+              </button>
+            </div>
+
+            <p style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; margin-bottom: 20px; color: #333;">
+              ${comp.description}
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; border-top: 2px dashed var(--border-color); padding-top: 14px;">
+              <div>
+                <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 4px; padding-bottom: 2px;">Market Cap</div>
+                <div style="font-weight: 700; font-size: 1.1rem;">${comp.marketCap}</div>
+              </div>
+              <div>
+                <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 4px; padding-bottom: 2px;">Guidance Adherence</div>
+                <div style="font-weight: 700; font-size: 1.1rem;">${comp.guidanceCoverage}</div>
+              </div>
+              <div>
+                <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 4px; padding-bottom: 2px;">Coverage</div>
+                <div style="font-weight: 700; font-size: 1.1rem;">${compPromises.length} Audits</div>
+              </div>
+              <div>
+                <div class="stat-label" style="font-size: 0.75rem; margin-bottom: 4px; padding-bottom: 2px;">Ticker</div>
+                <div style="font-weight: 700; font-size: 1.1rem; text-transform: uppercase;">${comp.ticker}</div>
+              </div>
             </div>
           </div>
 
-          <p class="text-xs text-textMuted leading-relaxed mb-5 flex-1 line-clamp-3">${comp.description}</p>
-
-          <div class="grid grid-cols-2 gap-3 mb-6 bg-bgLight p-3.5 rounded-2xl">
-            <div>
-              <p class="text-[10px] text-textMuted uppercase tracking-wider font-semibold">Market Cap</p>
-              <p class="font-mono text-xs font-bold text-textMain mt-0.5">${comp.marketCap}</p>
-            </div>
-            <div>
-              <p class="text-[10px] text-textMuted uppercase tracking-wider font-semibold">Guidance Coverage</p>
-              <p class="font-mono text-xs font-bold text-green-700 mt-0.5">${comp.guidanceCoverage}</p>
-            </div>
-            <div>
-              <p class="text-[10px] text-textMuted uppercase tracking-wider font-semibold">Forecasts</p>
-              <p class="text-xs font-semibold text-textMain mt-0.5">${compPromises.length} records</p>
-            </div>
-            <div>
-              <p class="text-[10px] text-textMuted uppercase tracking-wider font-semibold">Latest Quarter</p>
-              <p class="text-xs font-semibold text-textMain mt-0.5">${comp.lastReportedQuarter}</p>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center mt-auto pt-2">
-            <button class="text-xs text-textMuted hover:text-textMain font-semibold btn-view-profile flex items-center gap-1.5 transition-colors" data-ticker="${comp.ticker}">
-              <i class="far fa-id-card"></i> Profile
+          <div style="display: flex; gap: 8px; border-top: 2px solid var(--border-color); padding-top: 14px;">
+            <button class="brutal-btn flex-1 justify-center open-profile-btn" data-ticker="${comp.ticker}">
+              Full Dossier
             </button>
-            <a href="#promises?company=${comp.ticker}" class="bg-sidebarDark text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-pastelPink hover:text-sidebarDark transition-all flex items-center gap-1.5">
-              <span>Forecasts</span>
-              <i class="fas fa-arrow-right text-[10px]"></i>
+            <a href="#promises" class="brutal-btn justify-center" style="background: var(--main-yellow);" onclick="window.location.hash='#promises';">
+              Audit
             </a>
           </div>
         </div>
       `;
     }).join("");
 
-    // Attach View Profile clicks
-    grid.querySelectorAll(".btn-view-profile").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const ticker = btn.dataset.ticker;
-        const comp = companies.find(c => c.ticker === ticker);
-        if (comp) openCompanyProfileModal(comp, allPromises);
-      });
-    });
-
-    // Attach Watchlist star toggles
+    // Wire up star toggles
     grid.querySelectorAll("[data-star-ticker]").forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const ticker = btn.dataset.starTicker;
-        const updated = toggleWatchlist(ticker);
-        showToast(
-          updated ? "Watchlist Updated" : "Watchlist Removed",
-          `${ticker} ${updated ? "added to" : "removed from"} your local watchlist.`,
-          "info"
-        );
+        const t = btn.dataset.starTicker;
+        const nowStarred = toggleWatchlist(t);
+        showToast(nowStarred ? `Added ${t} to institutional watchlist` : `Removed ${t} from watchlist`);
         renderGrid();
+      });
+    });
+
+    // Wire up open profile buttons
+    grid.querySelectorAll(".open-profile-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const comp = companies.find(c => c.ticker === btn.dataset.ticker);
+        if (comp) openCompanyProfileModal(comp, allPromises);
       });
     });
   }
 
+  // Attach search and filter events
   document.getElementById("company-search-input").addEventListener("input", renderGrid);
   document.getElementById("company-sector-filter").addEventListener("change", renderGrid);
   document.getElementById("company-sort-select").addEventListener("change", renderGrid);

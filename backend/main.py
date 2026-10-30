@@ -34,11 +34,8 @@ async def lifespan(app: FastAPI):
     db = SessionLocal()
     try:
         from backend.models.company import Company
-        if db.query(Company).count() == 0:
-            print("Populating initial institutional financial records...")
-            seed_database(db)
-        else:
-            print(f"Database online with {db.query(Company).count()} companies.")
+        seed_database(db)
+        print(f"Database online with {db.query(Company).count()} companies.")
     finally:
         db.close()
 

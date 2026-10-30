@@ -1,6 +1,6 @@
 /**
- * PAGE 5 — Company Comparison (Intelly Aesthetic)
- * Side-by-side relative evaluation styled with Intelly warm canvas, white rounded-3xl cards, and pastel badges.
+ * PAGE 5 — Company Comparison (Neo-Brutalist Design)
+ * Head-to-head quantitative benchmark styled with bold black borders (3px), hard drop-shadows (6px), Space Grotesk.
  */
 
 import { api } from "../api.js";
@@ -12,45 +12,43 @@ export async function renderComparison(container, queryParams = {}) {
   const companies = await api.getCompanies();
   const allPromises = await api.getPromises();
 
-  const defaultCompA = queryParams.compA || "NVTD";
-  const defaultCompB = queryParams.compB || "APXC";
+  const defaultCompA = queryParams.compA || "NVDA";
+  const defaultCompB = queryParams.compB || "MSFT";
 
   container.innerHTML = `
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
-      <div>
-        <div class="flex items-center text-xs text-textMuted font-medium mb-1">
-          <a href="#dashboard" class="hover:text-textMain transition-colors">OutlookIQ</a>
-          <i class="fas fa-chevron-right mx-2 text-[9px]"></i>
-          <span class="text-textMain font-semibold">Relative Comparison</span>
-        </div>
-        <h2 class="text-2xl font-bold text-textMain">Company Comparison</h2>
-        <p class="text-textMuted text-xs mt-1">Cross-company benchmark of forecasting reliability, execution consistency, and bias.</p>
+    <header class="header">
+      <div class="header-title">
+        <h1>Relative Evaluation</h1>
+        <div class="badge">Head-to-Head Benchmark</div>
+        <span style="margin-left: 12px; font-weight: 700; font-size: 0.9rem;">Cross-Issuer Guidance Accuracy & Execution Discipline</span>
       </div>
-      <button id="btn-export-comparison-csv" class="flex items-center px-4 py-2 bg-cardWhite border border-gray-100 rounded-full text-textMain hover:bg-bgLight transition-colors text-xs font-semibold intelly-shadow self-start sm:self-auto">
-        <i class="fas fa-download mr-2 text-pastelPink"></i> Export CSV
-      </button>
-    </div>
+      <div class="header-actions">
+        <button id="btn-export-comparison-csv" class="brutal-btn">
+          <i class="fas fa-download"></i> Export Comparison CSV
+        </button>
+      </div>
+    </header>
 
     <!-- Controls -->
-    <div class="bg-cardWhite rounded-2xl p-4 mb-6 intelly-shadow flex flex-wrap items-center gap-4">
+    <div class="brutal-card" style="padding: 16px; margin-bottom: 24px; flex-direction: row; flex-wrap: wrap; gap: 16px; align-items: center;">
       <div class="flex items-center gap-2">
-        <label for="compare-comp-a" class="text-xs text-textMuted font-medium">Company A:</label>
-        <select id="compare-comp-a" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Firm A:</span>
+        <select id="compare-comp-a" class="brutal-select">
           ${companies.map(c => `<option value="${c.ticker}" ${c.ticker === defaultCompA ? "selected" : ""}>${c.ticker} - ${c.name}</option>`).join("")}
         </select>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="compare-comp-b" class="text-xs text-textMuted font-medium">Company B:</label>
-        <select id="compare-comp-b" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Firm B:</span>
+        <select id="compare-comp-b" class="brutal-select">
           ${companies.map(c => `<option value="${c.ticker}" ${c.ticker === defaultCompB ? "selected" : ""}>${c.ticker} - ${c.name}</option>`).join("")}
         </select>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="compare-metric-select" class="text-xs text-textMuted font-medium">Metric:</label>
-        <select id="compare-metric-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Metric:</span>
+        <select id="compare-metric-select" class="brutal-select">
           <option value="Revenue">Revenue</option>
           <option value="Gross Margin">Gross Margin</option>
           <option value="Diluted EPS">Diluted EPS</option>
@@ -58,75 +56,63 @@ export async function renderComparison(container, queryParams = {}) {
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="compare-window-select" class="text-xs text-textMuted font-medium">Window:</label>
-        <select id="compare-window-select" class="bg-bgLight text-textMain rounded-full py-1.5 px-4 text-xs outline-none cursor-pointer border border-transparent focus:border-pastelPink">
-          <option value="ALL">All Overlapping Quarters</option>
+        <span class="stat-label" style="border: none; margin: 0; padding: 0;">Window:</span>
+        <select id="compare-window-select" class="brutal-select">
+          <option value="ALL">All Available Quarters</option>
+          <option value="2025">FY 2025 Quarters</option>
           <option value="2024">FY 2024 Quarters</option>
-          <option value="2023">FY 2023 Quarters</option>
         </select>
       </div>
 
-      <button id="btn-run-compare" class="px-5 py-2 bg-sidebarDark text-white rounded-full text-xs font-semibold hover:bg-pastelPink hover:text-sidebarDark transition-all">
-        Compare
+      <button id="btn-run-compare" class="brutal-btn" style="background: var(--main-yellow);">
+        Run Comparison
       </button>
     </div>
 
     <!-- Side-by-Side Summary Cards -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6" id="comp-cards-container">
+    <div class="grid-3" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;" id="comp-cards-container">
       <!-- Injected dynamically -->
     </div>
 
     <!-- Comparison Bar Chart Section -->
-    <div class="bg-cardWhite rounded-3xl p-6 mb-6 intelly-shadow border border-gray-100">
-      <div class="flex justify-between items-center mb-6">
+    <div class="brutal-card" style="margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
         <div>
-          <h3 id="comp-chart-title" class="text-base font-bold text-textMain">Quarterly Performance Comparison</h3>
-          <p class="text-xs text-textMuted mt-0.5">Reported results against common-period guidance midpoint</p>
+          <h3 id="comp-chart-title" style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase;">Quarterly Performance Comparison</h3>
+          <p style="font-weight: 600; font-size: 0.85rem; color: #666; margin-top: 4px;">Reported results against common-period guidance midpoint</p>
         </div>
-        <span class="text-xs bg-pastelBlue text-blue-800 px-3 py-1 rounded-full font-bold" id="comp-metric-badge">Revenue</span>
+        <span class="badge" style="background: var(--main-teal);" id="comp-metric-badge">Revenue</span>
       </div>
-      <div class="chart-wrapper h-[280px] relative" id="comp-chart-wrapper">
+      <div style="height: 300px; position: relative;" id="comp-chart-wrapper">
         <canvas id="chart-company-comparison"></canvas>
       </div>
     </div>
 
     <!-- Common Period Reconciliation Table -->
-    <div class="bg-cardWhite rounded-3xl intelly-shadow overflow-hidden mb-8 border border-gray-100">
-      <div class="p-5 border-b border-gray-100">
-        <h3 class="text-base font-bold text-textMain">Common-Period Financial Reconciliation</h3>
-        <p class="text-xs text-textMuted mt-0.5">Direct head-to-head guidance vs actual performance across matched quarters</p>
+    <div style="margin-bottom: 24px; overflow-x: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase;">Common-Period Financial Reconciliation</h3>
+        <span class="badge" style="background: var(--main-pink);">Calendar Normalized</span>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-bgLight/50 border-b border-gray-100 text-[10px] text-textMuted uppercase tracking-wider font-semibold">
-              <th class="py-3.5 px-5">Target Quarter</th>
-              <th class="py-3.5 px-5">Metric</th>
-              <th class="py-3.5 px-5" id="th-comp-a-guidance">Comp A Guidance</th>
-              <th class="py-3.5 px-5" id="th-comp-a-actual">Comp A Actual</th>
-              <th class="py-3.5 px-5" id="th-comp-b-guidance">Comp B Guidance</th>
-              <th class="py-3.5 px-5" id="th-comp-b-actual">Comp B Actual</th>
-              <th class="py-3.5 px-5">Spread Variance</th>
-            </tr>
-          </thead>
-          <tbody id="comp-table-tbody" class="text-xs text-textMain divide-y divide-gray-100">
-            <!-- Injected dynamically -->
-          </tbody>
-        </table>
-      </div>
-      <div class="p-4 border-t border-gray-100 bg-bgLight/30 text-xs text-textMuted font-medium">
-        <strong class="text-textMain">Calendar Normalization:</strong> Evaluating overlapping periods only. Different fiscal year ends are mapped to matching calendar calendar quarters.
-      </div>
+      <table class="brutal-table">
+        <thead>
+          <tr>
+            <th>Target Quarter</th>
+            <th>Metric</th>
+            <th id="th-comp-a-guidance">Firm A Guidance</th>
+            <th id="th-comp-a-actual">Firm A Actual</th>
+            <th id="th-comp-b-guidance">Firm B Guidance</th>
+            <th id="th-comp-b-actual">Firm B Actual</th>
+            <th>Spread Variance</th>
+          </tr>
+        </thead>
+        <tbody id="comp-table-tbody">
+          <!-- Injected dynamically -->
+        </tbody>
+      </table>
     </div>
   `;
-
-  const pastelBadgeMap = {
-    NVTD: "bg-pastelGreen text-green-800",
-    APXC: "bg-pastelBlue text-blue-800",
-    LMBO: "bg-pastelPink text-pink-900",
-    SOLR: "bg-pastelYellow text-yellow-900"
-  };
 
   function executeComparison() {
     const tickerA = document.getElementById("compare-comp-a").value;
@@ -138,7 +124,7 @@ export async function renderComparison(container, queryParams = {}) {
     const compB = companies.find(c => c.ticker === tickerB);
 
     if (tickerA === tickerB) {
-      showToast("Comparison Notice", "Please choose two distinct companies to compare.", "warning");
+      showToast("Select two distinct companies for head-to-head comparison.");
       return;
     }
 
@@ -153,56 +139,83 @@ export async function renderComparison(container, queryParams = {}) {
     const kpisA = calculateKPIs(promisesA);
     const kpisB = calculateKPIs(promisesB);
 
-    const badgeA = pastelBadgeMap[compA.ticker] || "bg-bgLight text-textMain";
-    const badgeB = pastelBadgeMap[compB.ticker] || "bg-bgLight text-textMain";
-
     const cardsContainer = document.getElementById("comp-cards-container");
     cardsContainer.innerHTML = `
-      <div class="bg-cardWhite rounded-3xl p-6 intelly-shadow border border-gray-100">
-        <div class="flex items-center gap-3.5 mb-5">
-          <div class="w-11 h-11 rounded-2xl ${badgeA} flex items-center justify-center font-bold text-sm shrink-0">
-            ${compA.monogram}
+      <div class="brutal-card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
+          <div class="brutal-border bg-yellow" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem;">
+            ${compA.monogram || compA.ticker.slice(0, 2)}
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-mono font-bold text-textMain">${compA.ticker}</span>
-              <span class="text-[10px] bg-bgLight text-textMuted px-2 py-0.5 rounded-full">${compA.sector}</span>
-            </div>
-            <h3 class="text-base font-bold text-textMain leading-tight mt-0.5">${compA.name}</h3>
+            <span class="badge" style="font-size: 0.7rem; padding: 2px 6px;">${compA.ticker}</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase;">${compA.name}</h3>
           </div>
         </div>
 
-        <div class="space-y-2.5 text-xs">
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Evaluated Forecasts</span><span class="font-mono font-bold text-textMain">${kpisA.evaluatedCount} / ${kpisA.totalTracked}</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Exceeded Guidance</span><span class="font-mono text-green-700 font-bold">${kpisA.exceededCount} (${kpisA.exceededPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Met Guidance</span><span class="font-mono text-blue-700 font-bold">${kpisA.metCount} (${kpisA.metPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Missed Guidance</span><span class="font-mono text-red-700 font-bold">${kpisA.missedCount} (${kpisA.missedPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Mean Absolute Dev.</span><span class="font-mono text-textMain font-bold">${kpisA.meanAbsDev}%</span></div>
-          <div class="flex justify-between py-1.5"><span class="text-textMuted">Net Forecast Bias</span><span class="font-mono font-bold ${kpisA.netBias >= 0 ? "text-green-700" : "text-red-700"}">${kpisA.netBias >= 0 ? "+" : ""}${kpisA.netBias}%</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Evaluated Forecasts</span>
+            <strong style="font-size: 0.95rem;">${kpisA.evaluatedCount} / ${kpisA.totalTracked}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Exceeded (Beat)</span>
+            <strong style="color: #000; background: var(--main-yellow); padding: 2px 6px; border: 1px solid #000;">${kpisA.exceededCount} (${kpisA.exceededPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Met Within Corridor</span>
+            <strong style="background: var(--main-teal); padding: 2px 6px; border: 1px solid #000;">${kpisA.metCount} (${kpisA.metPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Missed Guidance</span>
+            <strong style="background: var(--main-pink); padding: 2px 6px; border: 1px solid #000;">${kpisA.missedCount} (${kpisA.missedPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Mean Absolute Dev.</span>
+            <strong style="font-size: 0.95rem;">${kpisA.meanAbsDev}%</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 4px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Net Forecast Bias</span>
+            <strong style="font-size: 0.95rem;">${kpisA.netBias >= 0 ? "+" : ""}${kpisA.netBias}% (${kpisA.netBias >= 0 ? "Conservative" : "Aggressive"})</strong>
+          </div>
         </div>
       </div>
 
-      <div class="bg-cardWhite rounded-3xl p-6 intelly-shadow border border-gray-100">
-        <div class="flex items-center gap-3.5 mb-5">
-          <div class="w-11 h-11 rounded-2xl ${badgeB} flex items-center justify-center font-bold text-sm shrink-0">
-            ${compB.monogram}
+      <div class="brutal-card">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
+          <div class="brutal-border bg-teal" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem;">
+            ${compB.monogram || compB.ticker.slice(0, 2)}
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-mono font-bold text-textMain">${compB.ticker}</span>
-              <span class="text-[10px] bg-bgLight text-textMuted px-2 py-0.5 rounded-full">${compB.sector}</span>
-            </div>
-            <h3 class="text-base font-bold text-textMain leading-tight mt-0.5">${compB.name}</h3>
+            <span class="badge" style="font-size: 0.7rem; padding: 2px 6px;">${compB.ticker}</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase;">${compB.name}</h3>
           </div>
         </div>
 
-        <div class="space-y-2.5 text-xs">
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Evaluated Forecasts</span><span class="font-mono font-bold text-textMain">${kpisB.evaluatedCount} / ${kpisB.totalTracked}</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Exceeded Guidance</span><span class="font-mono text-green-700 font-bold">${kpisB.exceededCount} (${kpisB.exceededPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Met Guidance</span><span class="font-mono text-blue-700 font-bold">${kpisB.metCount} (${kpisB.metPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Missed Guidance</span><span class="font-mono text-red-700 font-bold">${kpisB.missedCount} (${kpisB.missedPct}%)</span></div>
-          <div class="flex justify-between py-1.5 border-b border-gray-100"><span class="text-textMuted">Mean Absolute Dev.</span><span class="font-mono text-textMain font-bold">${kpisB.meanAbsDev}%</span></div>
-          <div class="flex justify-between py-1.5"><span class="text-textMuted">Net Forecast Bias</span><span class="font-mono font-bold ${kpisB.netBias >= 0 ? "text-green-700" : "text-red-700"}">${kpisB.netBias >= 0 ? "+" : ""}${kpisB.netBias}%</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Evaluated Forecasts</span>
+            <strong style="font-size: 0.95rem;">${kpisB.evaluatedCount} / ${kpisB.totalTracked}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Exceeded (Beat)</span>
+            <strong style="color: #000; background: var(--main-yellow); padding: 2px 6px; border: 1px solid #000;">${kpisB.exceededCount} (${kpisB.exceededPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Met Within Corridor</span>
+            <strong style="background: var(--main-teal); padding: 2px 6px; border: 1px solid #000;">${kpisB.metCount} (${kpisB.metPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Missed Guidance</span>
+            <strong style="background: var(--main-pink); padding: 2px 6px; border: 1px solid #000;">${kpisB.missedCount} (${kpisB.missedPct}%)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 2px dashed var(--border-color); padding-bottom: 6px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Mean Absolute Dev.</span>
+            <strong style="font-size: 0.95rem;">${kpisB.meanAbsDev}%</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 4px;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #666;">Net Forecast Bias</span>
+            <strong style="font-size: 0.95rem;">${kpisB.netBias >= 0 ? "+" : ""}${kpisB.netBias}% (${kpisB.netBias >= 0 ? "Conservative" : "Aggressive"})</strong>
+          </div>
         </div>
       </div>
     `;
@@ -222,8 +235,8 @@ export async function renderComparison(container, queryParams = {}) {
     const chartWrapper = document.getElementById("comp-chart-wrapper");
     if (!chartInstance) {
       chartWrapper.innerHTML = `
-        <div class="flex items-center justify-center h-full text-center text-textMuted text-xs p-8">
-          No overlapping evaluated quarters found for ${metric} in the selected fiscal window.
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; font-weight: 700; text-transform: uppercase; color: #666;">
+          No overlapping evaluated quarters found for ${metric} in the selected window.
         </div>
       `;
     }
@@ -233,7 +246,7 @@ export async function renderComparison(container, queryParams = {}) {
     document.getElementById("th-comp-b-guidance").textContent = `${compB.ticker} Guidance`;
     document.getElementById("th-comp-b-actual").textContent = `${compB.ticker} Actual`;
 
-    const tableQuarters = ["Q3 FY24", "Q2 FY24", "Q1 FY24", "Q4 FY23"];
+    const tableQuarters = ["Q3 FY25", "Q2 FY25", "Q1 FY25", "Q4 FY24", "Q3 FY24", "Q2 FY24", "Q1 FY24"];
     const tbody = document.getElementById("comp-table-tbody");
 
     const matchedRows = [];
@@ -244,7 +257,7 @@ export async function renderComparison(container, queryParams = {}) {
     });
 
     if (matchedRows.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-textMuted font-medium">No matched guidance records found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; font-weight: 700; text-transform: uppercase;">No matched guidance records found across the selected quarters.</td></tr>`;
       return;
     }
 
@@ -265,18 +278,14 @@ export async function renderComparison(container, queryParams = {}) {
       }
 
       return `
-        <tr class="hover:bg-bgLight/50 transition-colors">
-          <td class="py-3.5 px-5 font-bold text-textMain">${row.quarter}</td>
-          <td class="py-3.5 px-5 text-textMuted">${metric}</td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMuted">${gStrA}</td>
-          <td class="py-3.5 px-5 font-mono text-xs ${evA?.diffPct > 0 ? "text-green-700 font-bold" : "text-red-700 font-bold"}">
-            ${actStrA}
-          </td>
-          <td class="py-3.5 px-5 font-mono text-xs text-textMuted">${gStrB}</td>
-          <td class="py-3.5 px-5 font-mono text-xs ${evB?.diffPct > 0 ? "text-green-700 font-bold" : "text-red-700 font-bold"}">
-            ${actStrB}
-          </td>
-          <td class="py-3.5 px-5 text-xs font-semibold text-textMain">${diffNote}</td>
+        <tr>
+          <td style="font-weight: 700; text-transform: uppercase;">${row.quarter}</td>
+          <td style="font-weight: 600;">${metric}</td>
+          <td style="font-weight: 600;">${gStrA}</td>
+          <td style="font-weight: 700;">${actStrA}</td>
+          <td style="font-weight: 600;">${gStrB}</td>
+          <td style="font-weight: 700;">${actStrB}</td>
+          <td style="font-weight: 700; text-transform: uppercase;">${diffNote}</td>
         </tr>
       `;
     }).join("");
@@ -298,7 +307,7 @@ export async function renderComparison(container, queryParams = {}) {
       { Parameter: "Export Timestamp", CompA: new Date().toISOString(), CompB: new Date().toISOString() }
     ];
     exportToCSV(`OutlookIQ-Comparison-${tickerA}-vs-${tickerB}.csv`, rows);
-    showToast("Comparison CSV Exported", "Comparison summary downloaded.", "success");
+    showToast(`Comparison summary exported.`);
   });
 
   executeComparison();
