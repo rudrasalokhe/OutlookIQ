@@ -62,8 +62,8 @@ class MongoManager:
             self._client = MongoClient(
                 settings.MONGO_URI,
                 tlsCAFile=certifi.where(),
-                serverSelectionTimeoutMS=5000,
-                connectTimeoutMS=5000
+                serverSelectionTimeoutMS=1000,
+                connectTimeoutMS=1000
             )
             # Test connection with ping
             self._client.admin.command('ping')
@@ -71,9 +71,12 @@ class MongoManager:
             self._connected = True
             self._last_error = ""
 
-            # Ensure indexes
-            self._db.users.create_index("email", unique=True)
-            self._db.audit_logs.create_index("user_id")
+            # Ensure indexes safely
+            try:
+                self._db.users.create_index("email", unique=True)
+                self._db.audit_logs.create_index("user_id")
+            except Exception:
+                pass
             logger.info(f"Successfully connected to MongoDB database: {settings.MONGO_DB_NAME}")
         except Exception as e:
             self._connected = False

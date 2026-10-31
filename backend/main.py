@@ -35,7 +35,8 @@ async def lifespan(app: FastAPI):
     db = SessionLocal()
     try:
         from backend.models.company import Company
-        seed_database(db)
+        if db.query(Company).count() == 0:
+            seed_database(db)
         print(f"Database online with {db.query(Company).count()} companies.")
     finally:
         db.close()
@@ -56,7 +57,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Register API Routers
 app.include_router(health_router, prefix=settings.API_PREFIX)
 app.include_router(companies_router, prefix=settings.API_PREFIX)

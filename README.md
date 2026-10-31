@@ -1,39 +1,87 @@
-# OutlookIQ — AI-Powered Financial Guidance Intelligence Platform
+# OutlookIQ — Agentic Financial Intelligence Platform
 
-> **"What they forecast. What they delivered."**
+> **"What they forecast. What they delivered."**  
+> **Course Project:** *RAG Systems & Agentic Workflows with Pinecone and LangGraph*
 
-OutlookIQ is an institutional-grade financial intelligence application that tracks forward-looking management guidance (revenue, gross margin, EPS, operating expenses) from corporate earnings calls and SEC filings, deterministically evaluates it against subsequently reported financial results, and provides grounded, hallucination-free answers using a genuine Retrieval-Augmented Generation (RAG) pipeline.
+OutlookIQ is an institutional-grade financial intelligence application engineered around **LangGraph multi-step agentic workflows** and **Pinecone vector retrieval**. It ingests forward-looking corporate guidance statements from SEC filings (Form 10-Q/10-K) and earnings call transcripts, indexes them into a high-dimensional vector space, deterministically reconciles them against subsequently reported financial results, and executes a stateful LangGraph agent graph to deliver strictly grounded, zero-hallucination intelligence with verifiable citations.
+
+---
+
+## 🎓 Course Syllabus Alignment: "RAG Systems & Agentic Workflows with Pinecone and LangGraph"
+
+| Course Pillar | Implementation in OutlookIQ | Key Codebase File |
+| :--- | :--- | :--- |
+| **LangGraph Agentic State Machine** | Multi-node `StateGraph` with typed state (`FinancialAgentState`), routing conditional edges, document relevance grading, and factuality audit loops. | [`backend/services/agentic_workflow.py`](file:///backend/services/agentic_workflow.py) |
+| **Pinecone Vector Database** | 384-dimensional dense vector indexing with cosine distance, metadata filtering (`company_id`, `fiscal_year`, `doc_type`), and resilient hybrid fallback. | [`backend/services/pinecone_service.py`](file:///backend/services/pinecone_service.py) |
+| **Advanced RAG Retrieval** | Multi-query expansion, Hybrid Dense-Sparse scoring, and Reciprocal Rank Fusion (RRF: $k=60$) combining semantic search and BM25 financial token matching. | [`backend/services/vector_store.py`](file:///backend/services/vector_store.py) |
+| **Agentic Reflection & Grading** | Dedicated `grade_documents` node that acts as a relevance evaluator before synthesis to filter out low-confidence context. | [`backend/services/agentic_workflow.py`](file:///backend/services/agentic_workflow.py) |
+| **Zero-Hallucination Guardrails** | Deterministic mathematical calculation of guidance bounds (`(lower + upper)/2`) and `hallucination_check` node auditing numerical claims. | [`backend/services/calculations.py`](file:///backend/services/calculations.py) |
+
+```
+                       [START] (User Natural Language Query)
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │     analyze_intent    │  (Ticker, Metric, FY & Sub-queries)
+               └──────────┬────────────┘
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │   retrieve_pinecone   │  (Dense Pinecone + BM25 Lexical RRF)
+               └──────────┬────────────┘
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │    grade_documents    │  (Relevance evaluation & noise filtering)
+               └──────────┬────────────┘
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │  query_structured_db  │  (Relational SQLite Verified Guidance & Actuals)
+               └──────────┬────────────┘
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │generate_grounded_answer│ (LLM Synthesis constrained strictly to citations)
+               └──────────┬────────────┘
+                          │
+                          ▼
+               ┌───────────────────────┐
+               │  hallucination_check  │  (Numerical claim verification & scoring)
+               └──────────┬────────────┘
+                          │
+                          ▼
+                        [END] (Grounded Intelligence + Citations + Telemetry)
+```
 
 ---
 
 ## 🌟 Key Architecture & Capabilities
 
-1. **Python FastAPI Backend (`backend/`)**: High-performance asynchronous REST API with SQLite database, WAL mode, structured Pydantic schemas, and SQLAlchemy ORM.
-2. **Deterministic Financial Verification Engine (`backend/services/calculations.py`)**:
+1. **LangGraph Agent Engine (`backend/services/agentic_workflow.py`)**:
+   - `StateGraph(FinancialAgentState)` architecture.
+   - Dynamic node timings and execution trace passed directly to the UI.
+   - Hallucination audit score (faithfulness percentage) attached to each response.
+2. **Pinecone Vector Service (`backend/services/pinecone_service.py`)**:
+   - Integrated with official `pinecone` client SDK.
+   - Index: `outlookiq-financial` (dimension: 384, metric: `cosine`, cloud: AWS Serverless).
+   - Hybrid mode fusing dense vector search with sparse keyword scoring via Reciprocal Rank Fusion.
+   - Seamless local fallback for offline development or network-restricted environments.
+3. **Python FastAPI Backend (`backend/`)**: High-performance asynchronous REST API with SQLite database, WAL mode, structured Pydantic schemas, and SQLAlchemy ORM.
+4. **Deterministic Financial Verification Engine (`backend/services/calculations.py`)**:
    - Guidance corridor calculation (`(lower + upper) / 2`).
    - Outcome classification: **Exceeded**, **Met**, **Missed**, **Pending**, and **Unverifiable**.
    - Handles favorable direction metrics (higher-is-better for Revenue/EPS/Margins vs lower-is-better for OpEx/Costs).
    - Percentage deviation and percentage-point calculations with auditable provenance.
-3. **Genuine RAG Pipeline (`backend/services/rag_pipeline.py`)**:
-   - Query intent parsing (identifies target company, metric, and fiscal year).
-   - Persistent vector search with ChromaDB (`all-MiniLM-L6-v2` embeddings).
-   - Strict factual grounding: Zero hallucinated numbers, dates, or citations.
-   - Dual-mode synthesis: Native support for Google Gemini API (`gemini-1.5-flash`), OpenAI (`gpt-4o-mini`), or local deterministic financial QA engine when running offline.
-4. **Document Ingestion Engine (`backend/services/document_loader.py`)**:
+5. **Document Ingestion Engine (`backend/services/document_loader.py`)**:
    - Supports PDF earnings releases via **PyMuPDF (`fitz`)** and `pypdf`.
    - Supports HTML earnings releases and tables via **BeautifulSoup4**.
-   - Plain-text transcript parsing.
-   - **SHA-256 deduplication**: Guarantees identical documents are never re-indexed.
+   - Plain-text transcript parsing with **SHA-256 deduplication**.
    - Financial context-aware semantic chunking.
-5. **SEC EDGAR Integration (`backend/services/sec_client.py`)**:
-   - Standardized XBRL Company Facts retrieval from SEC EDGAR.
-   - Respects SEC fair access policies (custom User-Agent format, request throttling <= 10 req/s).
-   - Local JSON caching of SEC company facts.
-6. **Frontend Integration (`js/api.js`)**:
+6. **Frontend Integration (`js/api.js` & `js/pages/analyst.js`)**:
    - Live communication with FastAPI (`http://127.0.0.1:8000`).
-   - Real-time Document Uploads directly ingest, parse, chunk, and index into ChromaDB.
-   - AI Analyst chat connected to real vector citations and interactive guidance cards.
-   - Automatic graceful fallback if backend is offline.
+   - Real-time Document Uploads directly ingest, parse, chunk, and index into Pinecone/vector store.
+   - Interactive LangGraph pipeline trace with node execution telemetry and verified source citations.
 
 ---
 

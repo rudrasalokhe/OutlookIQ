@@ -11,6 +11,12 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Expires', '0')
         super().end_headers()
 
+    def handle(self):
+        try:
+            super().handle()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
 class ThreadingServer(socketserver.ThreadingTCPServer):
     allow_reuse_address = True
     daemon_threads = True

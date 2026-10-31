@@ -6,13 +6,14 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from backend.database import get_db
-from backend.services.vector_store import vector_store
+from backend.services.pinecone_service import pinecone_service
+from backend.config import settings
 
 router = APIRouter(tags=["Health"])
 
 @router.get("/health")
 def check_health(db: Session = Depends(get_db)):
-    """Return backend, SQLite database, and ChromaDB vector store health status."""
+    """Return backend, database, Pinecone vector store, and LangGraph workflow health status."""
     db_healthy = False
     try:
         db.execute(text("SELECT 1"))
@@ -20,18 +21,18 @@ def check_health(db: Session = Depends(get_db)):
     except Exception:
         pass
 
-    vector_count = 0
-    try:
-        vector_count = vector_store.count()
-    except Exception:
-        pass
+    pinecone_info = pinecone_service.get_status()
 
     return {
         "status": "healthy" if db_healthy else "degraded",
-        "service": "OutlookIQ Financial Intelligence API",
-        "version": "1.0.0",
+        "service": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "course_accreditation": settings.COURSE_ACCREDITATION,
+        "agentic_framework": settings.AGENTIC_FRAMEWORK,
         "database": "connected" if db_healthy else "disconnected",
-        "vector_store": "active",
-        "indexed_chunks": vector_count,
-        "mode": "verified_guidance_rag"
+        "vector_store": pinecone_info.get("provider", "Pinecone Hybrid"),
+        "pinecone_connected": pinecone_info.get("is_connected", False),
+        "pinecone_index": pinecone_info.get("index_name"),
+        "indexed_chunks": pinecone_info.get("total_vectors", 0),
+        "mode": "agentic_stategraph_rag"
     }

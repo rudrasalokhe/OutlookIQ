@@ -24,11 +24,9 @@ if settings.DATABASE_URL.startswith("sqlite"):
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.execute("PRAGMA journal_mode=WAL")
         cursor.close()
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
 def get_db():
     """FastAPI dependency yielding a database session."""
     db = SessionLocal()

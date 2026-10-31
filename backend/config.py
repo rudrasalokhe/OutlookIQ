@@ -10,12 +10,20 @@ from pydantic_settings import BaseSettings
 BASE_DIR = Path(__file__).resolve().parent
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "OutlookIQ — Guidance Intelligence Platform"
-    VERSION: str = "1.0.0"
+    PROJECT_NAME: str = "OutlookIQ — Agentic Guidance Intelligence (LangGraph & Pinecone)"
+    VERSION: str = "2.0.0"
     API_PREFIX: str = "/api"
+    COURSE_ACCREDITATION: str = "RAG Systems & Agentic Workflows with Pinecone and LangGraph"
+    AGENTIC_FRAMEWORK: str = "LangGraph (StateGraph)"
 
     # Database
     DATABASE_URL: str = f"sqlite:///{(BASE_DIR / 'storage' / 'outlookiq.db').resolve().as_posix()}"
+
+    # Vector Database & Course Tech Stack (Pinecone)
+    VECTOR_DB_PROVIDER: str = os.getenv("VECTOR_DB_PROVIDER", "pinecone")  # "pinecone", "chroma", "hybrid"
+    PINECONE_API_KEY: str = os.getenv("PINECONE_API_KEY", "")
+    PINECONE_ENVIRONMENT: str = os.getenv("PINECONE_ENVIRONMENT", "us-east-1")
+    PINECONE_INDEX_NAME: str = os.getenv("PINECONE_INDEX_NAME", "outlookiq-financial")
 
     # MongoDB Configuration
     MONGO_URI: str = os.getenv("MONGO_URI", "")
