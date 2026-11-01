@@ -300,12 +300,12 @@ export async function renderProfile(container) {
 
             <div>
               <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Email</label>
-              <input type="email" id="auth-input-email" placeholder="analyst@firm.com" class="brutal-border" style="width: 100%; padding: 10px; font-weight: 700;" required />
+              <input type="email" id="auth-input-email" placeholder="" autocomplete="off" class="brutal-border" style="width: 100%; padding: 10px; font-weight: 700;" required />
             </div>
 
             <div>
               <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Password</label>
-              <input type="password" id="auth-input-password" placeholder="••••••••" class="brutal-border" style="width: 100%; padding: 10px; font-weight: 700;" required />
+              <input type="password" id="auth-input-password" placeholder="" autocomplete="new-password" class="brutal-border" style="width: 100%; padding: 10px; font-weight: 700;" required />
             </div>
 
             <button type="submit" id="auth-submit-btn" class="brutal-btn" style="background: var(--main-yellow); justify-content: center; padding: 12px; margin-top: 6px;">

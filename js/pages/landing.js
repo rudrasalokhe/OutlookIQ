@@ -158,7 +158,7 @@ export function renderLanding(container) {
                 </div>
 
                 <!-- Create Account Form -->
-                <form id="form-create-account" style="display: flex; flex-direction: column; gap: 12px;">
+                <form id="form-create-account" autocomplete="off" style="display: flex; flex-direction: column; gap: 12px;">
                   <div>
                     <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">
                       Full Name
@@ -166,7 +166,8 @@ export function renderLanding(container) {
                     <input
                       type="text"
                       id="reg-input-name"
-                      placeholder="e.g. Rudra Salokhe"
+                      placeholder=""
+                      autocomplete="off"
                       class="brutal-border"
                       style="width: 100%; padding: 10px 12px; font-weight: 700; background: #fff; font-family: 'Space Grotesk', sans-serif;"
                       required
@@ -180,7 +181,8 @@ export function renderLanding(container) {
                     <input
                       type="email"
                       id="reg-input-email"
-                      placeholder="e.g. rudra@firm.com"
+                      placeholder=""
+                      autocomplete="off"
                       class="brutal-border"
                       style="width: 100%; padding: 10px 12px; font-weight: 700; background: #fff; font-family: 'Space Grotesk', sans-serif;"
                       required
@@ -194,7 +196,8 @@ export function renderLanding(container) {
                     <input
                       type="password"
                       id="reg-input-password"
-                      placeholder="••••••••"
+                      placeholder=""
+                      autocomplete="new-password"
                       class="brutal-border"
                       style="width: 100%; padding: 10px 12px; font-weight: 700; background: #fff; font-family: 'Space Grotesk', sans-serif;"
                       required
@@ -209,7 +212,8 @@ export function renderLanding(container) {
                       <input
                         type="text"
                         id="reg-input-org"
-                        placeholder="Apex Capital"
+                        placeholder=""
+                        autocomplete="off"
                         class="brutal-border"
                         style="width: 100%; padding: 8px 10px; font-weight: 700; background: #fff; font-size: 0.8rem; font-family: 'Space Grotesk', sans-serif;"
                       />
@@ -221,7 +225,8 @@ export function renderLanding(container) {
                       <input
                         type="text"
                         id="reg-input-role"
-                        placeholder="Quant Strategist"
+                        placeholder=""
+                        autocomplete="off"
                         class="brutal-border"
                         style="width: 100%; padding: 8px 10px; font-weight: 700; background: #fff; font-size: 0.8rem; font-family: 'Space Grotesk', sans-serif;"
                       />
@@ -234,7 +239,7 @@ export function renderLanding(container) {
                 </form>
 
                 <!-- Sign In Form (Hidden Initially) -->
-                <form id="form-signin" style="display: none; flex-direction: column; gap: 12px;">
+                <form id="form-signin" autocomplete="off" style="display: none; flex-direction: column; gap: 12px;">
                   <div>
                     <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">
                       Corporate Email
@@ -242,7 +247,8 @@ export function renderLanding(container) {
                     <input
                       type="email"
                       id="login-input-email"
-                      placeholder="analyst@outlookiq.internal"
+                      placeholder=""
+                      autocomplete="off"
                       class="brutal-border"
                       style="width: 100%; padding: 10px 12px; font-weight: 700; background: #fff; font-family: 'Space Grotesk', sans-serif;"
                       required
@@ -256,7 +262,8 @@ export function renderLanding(container) {
                     <input
                       type="password"
                       id="login-input-password"
-                      placeholder="••••••••"
+                      placeholder=""
+                      autocomplete="new-password"
                       class="brutal-border"
                       style="width: 100%; padding: 10px 12px; font-weight: 700; background: #fff; font-family: 'Space Grotesk', sans-serif;"
                       required
@@ -494,6 +501,10 @@ export function renderLanding(container) {
     tabReg.style.color = "#000";
     if (formCreate) formCreate.style.display = "none";
     if (formSign) formSign.style.display = "flex";
+    const emailEl = document.getElementById("login-input-email");
+    const passEl = document.getElementById("login-input-password");
+    if (emailEl) emailEl.value = "";
+    if (passEl) passEl.value = "";
   });
 
   // Create Account Form Submit
