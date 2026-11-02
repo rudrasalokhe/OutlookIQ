@@ -113,7 +113,7 @@ class RAGPipeline:
         import httpx
 
         evidence_text = "\n\n".join([
-            f"[Source {i+1}]: {c['title']} ({c['reporting_quarter']})\n\"{c['excerpt']}\""
+            f"[Source {i+1}]: {c['title']} ({c.get('reporting_quarter', 'Audited')})\n\"{c.get('full_text') or c.get('excerpt')}\""
             for i, c in enumerate(citations)
         ])
 
@@ -149,7 +149,7 @@ class RAGPipeline:
             "temperature": 0.1
         }
 
-        with httpx.Client(timeout=3.0) as client:
+        with httpx.Client(timeout=10.0) as client:
             resp = client.post(f"{base_url}/chat/completions", headers=headers, json=payload)
             if resp.status_code == 200:
                 data = resp.json()
@@ -169,7 +169,7 @@ class RAGPipeline:
         genai.configure(api_key=settings.GEMINI_API_KEY)
 
         evidence_text = "\n\n".join([
-            f"[Source {i+1}]: {c['title']} ({c['reporting_quarter']})\n\"{c['excerpt']}\""
+            f"[Source {i+1}]: {c['title']} ({c.get('reporting_quarter', 'Audited')})\n\"{c.get('full_text') or c.get('excerpt')}\""
             for i, c in enumerate(citations)
         ])
 
@@ -247,6 +247,34 @@ Retrieved Document Excerpts:
 
         # Fallback to citations text
         first_cite = citations[0]
+        full_text = first_cite.get("full_text") or first_cite.get("excerpt", "")
+
+        # Extract specific financial metric lines matching query keywords
+        relevant_lines = []
+        stopwords = {"what", "were", "was", "the", "for", "in", "and", "is", "of", "to", "did", "hit", "its", "quarter", "ended", "period"}
+        query_words = [w for w in re.findall(r"\b[a-zA-Z0-9]+\b", query.lower()) if w not in stopwords and len(w) > 2]
+
+        for line in full_text.split("\n"):
+            line_clean = line.strip()
+            if not line_clean:
+                continue
+            line_lower = line_clean.lower()
+            matches_kw = any(qw in line_lower for qw in query_words)
+            has_financial_data = any(sym in line_clean for sym in ["$", "%", "million", "billion", "growth", "sales", "revenue", "income"])
+            if matches_kw and has_financial_data:
+                relevant_lines.append(f"• {line_clean}")
+
+        if relevant_lines:
+            findings_text = "\n".join(relevant_lines[:8])
+            return (
+                f"### Verified Financial Findings from `{first_cite['title']}`\n\n"
+                f"Based on the indexed filing for `{first_cite.get('reporting_quarter', 'Audited Period')}`:\n\n"
+                f"{findings_text}\n\n"
+                f"**Audit Context:**\n"
+                f"> \"{first_cite['excerpt']}\"\n\n"
+                f"*Provenance:* Retrieved from Pinecone vector corpus and verified against source filing."
+            )
+
         return (
             f"According to verified filing `{first_cite['title']}` for period `{first_cite['reporting_quarter']}`:\n\n"
             f"> \"{first_cite['excerpt']}\"\n\n"

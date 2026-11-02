@@ -229,34 +229,47 @@ export async function renderDocuments(container) {
   });
 
   async function handleFiles(fileList) {
+    if (!fileList || fileList.length === 0) return;
+
     for (const file of fileList) {
       const name = file.name;
-      const sizeMB = (file.size / (1024 * 1024)).toFixed(1) + " MB";
+      let ticker = "AAPL";
+      const upper = name.toUpperCase();
+      if (upper.includes("MSFT") || upper.includes("MICROSOFT")) ticker = "MSFT";
+      else if (upper.includes("NVDA") || upper.includes("NVIDIA")) ticker = "NVDA";
+      else if (upper.includes("AAPL") || upper.includes("APPLE")) ticker = "AAPL";
+      else if (upper.includes("NVTD")) ticker = "NVTD";
+      else if (upper.includes("APXC")) ticker = "APXC";
 
-      let ticker = "NVDA";
-      if (name.toUpperCase().includes("MSFT")) ticker = "MSFT";
-      if (name.toUpperCase().includes("AAPL")) ticker = "AAPL";
-      if (name.toUpperCase().includes("NVTD")) ticker = "NVTD";
-      if (name.toUpperCase().includes("APXC")) ticker = "APXC";
+      let docType = "Form 10-Q";
+      if (upper.includes("10-K")) docType = "Form 10-K";
+      else if (upper.includes("8-K") || upper.includes("RELEASE")) docType = "Earnings Release";
+      else if (upper.includes("TRANSCRIPT")) docType = "Earnings Transcript";
 
-      const newDoc = {
-        id: "DOC-UP-" + Date.now().toString().slice(-4),
-        name: name,
-        companyId: ticker,
-        ticker: ticker,
-        type: name.includes("10-K") ? "10-K Filing" : "10-Q Filing",
-        reportingQuarter: "Q3 FY25",
-        uploadDate: new Date().toISOString().split("T")[0],
-        fileSize: sizeMB,
-        status: "Indexed (FastAPI RAG Pipeline)",
-        rawTextSample: `Ingested document: ${name} (${sizeMB}). Chunked into dense vector embeddings and lexical keywords.`
-      };
+      let fiscalPeriod = "Q3 FY26";
+      const qMatch = name.match(/Q[1-4]\s*(?:FY)?\s*(?:20)?\d{2}/i);
+      if (qMatch) fiscalPeriod = qMatch[0].toUpperCase();
 
-      docs.unshift(newDoc);
+      showToast(`Uploading & vectorizing ${file.name}...`);
+
+      try {
+        const result = await api.uploadDocument(file, ticker, docType, fiscalPeriod);
+        if (result) {
+          showToast(`✓ Ingested & vectorized into Pinecone: ${file.name}`);
+        }
+      } catch (err) {
+        console.error("Upload failed:", err);
+        showToast(`Upload failed: ${err.message || err}`);
+      }
     }
 
+    // Refresh live documents list from FastAPI backend
+    try {
+      docs = await api.getDocuments();
+    } catch (e) {
+      console.warn("Failed to refresh docs list:", e);
+    }
     renderTable();
-    showToast(`Successfully staged and indexed ${fileList.length} files.`);
   }
 
   document.getElementById("btn-import-url").addEventListener("click", () => {

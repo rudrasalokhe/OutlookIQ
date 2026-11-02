@@ -210,9 +210,13 @@ export class ApiService {
         if (res.ok) {
           const data = await res.json();
           return data.document;
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.detail || `Server error (${res.status}) during document upload`);
         }
       } catch (err) {
-        console.warn("Live upload failed, saving fallback:", err);
+        console.error("Live upload failed:", err);
+        throw err;
       }
     }
 

@@ -11,6 +11,7 @@ venv/
 .venv/
 
 # Storage & DB
-backend/storage/*.db
+backend/storage/*.db*
+backend/storage/*.sqlite*
 backend/storage/chroma/
 backend/storage/uploads/

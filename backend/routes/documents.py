@@ -18,6 +18,7 @@ from backend.services.document_loader import (
     clean_financial_text,
     chunk_financial_document
 )
+from backend.services.pinecone_service import pinecone_service
 from backend.services.vector_store import vector_store
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
@@ -66,7 +67,21 @@ async def upload_document(
     Ingest a financial document (PDF, HTML, or TXT), compute content hash,
     extract text, generate vector chunks, index into ChromaDB, and record in SQLite.
     """
-    company_id = company_id.upper()
+    # Detect ticker from filename or company_id
+    fn_upper = file.filename.upper()
+    if "AAPL" in fn_upper or "APPLE" in fn_upper:
+        company_id = "AAPL"
+    elif "MSFT" in fn_upper or "MICROSOFT" in fn_upper:
+        company_id = "MSFT"
+    elif "NVDA" in fn_upper or "NVIDIA" in fn_upper:
+        company_id = "NVDA"
+    elif "NVTD" in fn_upper:
+        company_id = "NVTD"
+    elif "APXC" in fn_upper:
+        company_id = "APXC"
+    else:
+        company_id = company_id.upper()
+
     comp = db.query(Company).filter((Company.id == company_id) | (Company.ticker == company_id)).first()
     if not comp:
         # Auto-create if not already present
@@ -137,8 +152,8 @@ async def upload_document(
         }
     )
 
-    # Index into ChromaDB
-    indexed_count = vector_store.add_chunks(chunks)
+    # Index into Pinecone (and mirror to local fallback)
+    indexed_count = pinecone_service.add_chunks(chunks)
 
     # Save to SQLite
     doc = Document(

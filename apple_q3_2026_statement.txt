@@ -1,0 +1,67 @@
+Apple Inc.
+CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)
+(In millions, except number of shares, which are reflected in thousands, and per-share amounts)
+
+Three Months Ended June 27, 2026 and June 28, 2025:
+Net sales:
+Products: $78,678 million (Three Months Ended June 28, 2025: $66,613 million)
+Services: $30,739 million (Three Months Ended June 28, 2025: $27,423 million)
+Total net sales: $109,417 million (Three Months Ended June 28, 2025: $94,036 million)
+
+Nine Months Ended June 27, 2026:
+Products: $272,629 million
+Services: $91,728 million
+Total net sales: $364,357 million (Nine Months Ended June 28, 2025: $313,695 million)
+
+Cost of sales:
+Products: $47,153 million
+Services: $7,494 million
+Total cost of sales: $54,647 million
+Gross margin: $54,770 million (Three Months Ended June 28, 2025: $43,718 million)
+
+Operating expenses:
+Research and development: $11,729 million
+Selling, general and administrative: $7,346 million
+Total operating expenses: $19,075 million
+Operating income: $35,695 million (Three Months Ended June 28, 2025: $28,202 million)
+Income before provision for income taxes: $36,267 million
+Provision for income taxes: $6,478 million
+Net income: $29,789 million (Three Months Ended June 28, 2025: $23,434 million)
+
+Earnings per share:
+Basic: $2.03
+Diluted: $2.02 (Three Months Ended June 28, 2025: $1.57)
+
+Shares used in computing earnings per share:
+Basic: 14,656,110 thousand
+Diluted: 14,714,676 thousand
+
+Net sales by category for Three Months Ended June 27, 2026:
+iPhone: $54,252 million (Three Months Ended June 28, 2025: $44,582 million)
+Mac: $10,352 million (Three Months Ended June 28, 2025: $8,046 million)
+iPad: $6,191 million (Three Months Ended June 28, 2025: $6,581 million)
+Wearables, Home and Accessories: $7,883 million (Three Months Ended June 28, 2025: $7,404 million)
+Services: $30,739 million (Three Months Ended June 28, 2025: $27,423 million)
+Total net sales: $109,417 million (Three Months Ended June 28, 2025: $94,036 million)
+
+Net sales by reportable segment for Three Months Ended June 27, 2026:
+Americas: $45,781 million (Three Months Ended June 28, 2025: $41,198 million)
+Europe: $29,395 million (Three Months Ended June 28, 2025: $24,014 million)
+Greater China: $18,816 million (Three Months Ended June 28, 2025: $15,369 million)
+Japan: $6,554 million (Three Months Ended June 28, 2025: $5,782 million)
+Rest of Asia Pacific: $8,871 million (Three Months Ended June 28, 2025: $7,673 million)
+Total net sales: $109,417 million
+
+CONDENSED CONSOLIDATED BALANCE SHEETS (Unaudited)
+As of June 27, 2026:
+Cash and cash equivalents: $39,544 million (September 27, 2025: $35,934 million)
+Marketable securities: $22,855 million
+Total current assets: $149,818 million
+Total non-current assets: $233,448 million
+Total assets: $383,266 million
+Total current liabilities: $149,326 million
+Total non-current liabilities: $126,420 million
+Total liabilities: $275,746 million
+Total shareholders' equity: $107,520 million
+Total liabilities and shareholders' equity: $383,266 million
+
