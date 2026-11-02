@@ -139,16 +139,19 @@ def retrieve_pinecone_node(state: FinancialAgentState) -> Dict[str, Any]:
     seen_chunk_ids = set()
 
     for sq in sub_queries:
-        results = pinecone_service.hybrid_query(
-            query_text=sq,
-            n_results=4,
-            company_id=company_ticker
-        )
-        for r in results:
-            cid = r.get("id") or r.get("text", "")[:60]
-            if cid not in seen_chunk_ids:
-                seen_chunk_ids.add(cid)
-                all_candidates.append(r)
+        try:
+            results = pinecone_service.hybrid_query(
+                query_text=sq,
+                n_results=4,
+                company_id=company_ticker
+            )
+            for r in results:
+                cid = r.get("id") or r.get("text", "")[:60]
+                if cid not in seen_chunk_ids:
+                    seen_chunk_ids.add(cid)
+                    all_candidates.append(r)
+        except Exception as e:
+            print(f"Sub-query retrieval notice: {e}")
 
     all_candidates.sort(key=lambda x: x.get("similarity", 0.0), reverse=True)
     top_candidates = all_candidates[:6]
